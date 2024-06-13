@@ -1,0 +1,4 @@
+﻿.idea
+*.DotSettings.User
+**/bin/**
+**/obj/**

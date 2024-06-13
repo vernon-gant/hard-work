@@ -1,0 +1,6 @@
+<html>
+<body>
+  <p>This paragraph <em>has <strong>improper nesting</em>
+  but let's see if it closes <strong>some tag</p>
+</body>
+</html>

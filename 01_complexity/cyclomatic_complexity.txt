@@ -1,0 +1,494 @@
+@@@ Cyclomatic complexity practise
+
+I found a repository with, as I assume, code written by a very green junior developer with cyclomatic complexity in some methods reaching 17!
+The goal is to reduce it at least by halving this value using different techniques - eliminating ifs, elses, using polymorphism, table logic, and so on.
+Because the project was really bad, I spent more time trying to restructure the code in terms of our problem and not in all aspects.
+But because it was bad, there were a lot of things to learn!
+
+
+1)
+
+
+@@@
+    public static void BookRoom(int i)
+    {
+        Console.WriteLine("\nChoose room number from: ");
+        int rn;
+        switch (i)
+        {
+            case 1:
+                for (int j = 0; j < HotelHolder.LuxuryDoubleroom.Length; j++)
+                {
+                    if (HotelHolder.LuxuryDoubleroom[j] == null)
+                    {
+                        Console.Write((j + 1) + ",");
+                    }
+                }
+
+                Console.Write("\nEnter room number: ");
+                rn = int.Parse(Console.ReadLine()) - 1;
+                if (HotelHolder.LuxuryDoubleroom[rn] != null)
+                    throw new NotAvailableException();
+                CustDetails(i, rn);
+                break;
+            case 2:
+                for (int j = 0; j < HotelHolder.DeluxeDoubleroom.Length; j++)
+                {
+                    if (HotelHolder.DeluxeDoubleroom[j] == null)
+                    {
+                        Console.Write((j + 11) + ",");
+                    }
+                }
+
+                Console.Write("\nEnter room number: ");
+                rn = int.Parse(Console.ReadLine()) - 11;
+                if (HotelHolder.DeluxeDoubleroom[rn] != null)
+                    throw new NotAvailableException();
+                CustDetails(i, rn);
+                break;
+            case 3:
+                for (int j = 0; j < HotelHolder.LuxurySingleroom.Length; j++)
+                {
+                    if (HotelHolder.LuxurySingleroom[j] == null)
+                    {
+                        Console.Write((j + 31) + ",");
+                    }
+                }
+
+                Console.Write("\nEnter room number: ");
+                rn = int.Parse(Console.ReadLine()) - 31;
+                if (HotelHolder.LuxurySingleroom[rn] != null)
+                    throw new NotAvailableException();
+                CustDetails(i, rn);
+                break;
+            case 4:
+                for (int j = 0; j < HotelHolder.DeluxeSingleroom.Length; j++)
+                {
+                    if (HotelHolder.DeluxeSingleroom[j] == null)
+                    {
+                        Console.Write((j + 41) + ",");
+                    }
+                }
+
+                Console.Write("\nEnter room number: ");
+                rn = int.Parse(Console.ReadLine()) - 41;
+                if (HotelHolder.DeluxeSingleroom[rn] != null)
+                    throw new NotAvailableException();
+                CustDetails(i, rn);
+                break;
+            default:
+                Console.WriteLine("Enter valid option");
+                break;
+        }
+
+        Console.WriteLine("Room Booked");
+    }
+@@@
+
+
+Here is the first monster with 17 cyclomatic complexity! We would have to write here 17 tests only for this method. The main problem is this switch with repeating code inside. The core idea of the program is to book rooms in a hotel.
+And the programmer just uses static arrays in the Holder and has only two types of rooms although it works with 4. So I decided to refactor it completely but explanation I will start from top to bottom. I defined all operations
+this guy has in the main Hotel class and extracted them in a separate interface
+
+
+@@@
+public interface FlowCoordinator
+{   
+    public BookingResult ReserveRoom();
+
+    public bool CheckAvailability();
+
+    public string CheckoutRoom();
+
+    public void OrderFood();
+
+    public string ShowRoomFeatures();
+}
+@@@
+
+
+Implementation uses also newly created abstractions
+
+
+@@@
+public class ConsoleInputFlowCoordinator(BookingManager bookingManager, ReservationRegistry reservationRegistry, UserInputReader userInputReader, RoomRequestResolver roomRequestResolver) : FlowCoordinator
+@@@
+
+
+New method has cyclomatic complexity of 1
+
+
+@@@
+    public BookingResult ReserveRoom()
+    {
+        int roomType = userInputReader.ReadRoomType();
+        RoomRequest roomRequest = roomRequestResolver.Resolve(roomType);
+        ReservationManager reservationManager = reservationRegistry.GetReservationManager(roomRequest);
+
+        if (!reservationManager.HasAvailableRooms()) return new Failure() { Reason = "No rooms available" };
+
+        RoomReservation reservation = reservationManager.ReserveRoom();
+
+        if (!reservation.Ok) return new Failure() { Reason = "Failed to reserve room" };
+
+        var booking = bookingManager.BookRoom(reservation.Room!);
+
+        return new Success() { Booking = booking };
+    }
+@@@
+
+
+The approach I used here is a normal subtype polymorphism for the ReservationManager. I defined firstly an abstract Room class and 4 subtypes for every concrete room.
+
+
+@@@
+public abstract class Room
+{
+    public required int RoomNumber { get; init; }
+    public abstract int PricePerNight { get; }
+
+    protected abstract int NumberOfBeds { get; }
+
+    protected abstract bool HasAC { get; }
+
+    protected abstract bool FreeBreakfast { get; }
+
+    public string GetFeatures => $"Room Number: {RoomNumber}\n" + $"Number of beds: {NumberOfBeds}\n" + $"AC: {(HasAC ? "Yes" : "No")}\n" + $"Free breakfast: {(FreeBreakfast ? "Yes" : "No")}\n" +
+                                 $"Charge per day: {PricePerNight}";
+}
+
+public class SingleRoom : Room
+{
+    public override int PricePerNight => 1200;
+    protected override int NumberOfBeds => 1;
+    protected override bool HasAC => false;
+    protected override bool FreeBreakfast => true;
+}
+
+and others
+@@@
+
+
+and for each of them it makes sense to have a separate entity for handling reservations of different types of rooms but with one common interface. So I created
+
+
+@@@
+public abstract class ReservationManager(ReservationsList reservationsList) : ReservationResultVisitor
+{
+    public bool HasAvailableRooms() => reservationsList.AnyRoomsAvailable;
+
+    public CheckoutResult CheckoutRoom(Room room) => reservationsList.CheckoutRoom(room);
+
+    public RoomReservation ReserveRoom() => reservationsList.ReserveRoom().Accept(this);
+
+    public RoomReservation Visit(NoFreeRoms result) => new(false, null);
+
+    public abstract RoomReservation Visit(SuccessfullyReserved result);
+
+    public abstract bool CanHandle(RoomRequest roomRequest);
+
+    public abstract bool CanHandle(Room room);
+}
+@@@
+
+
+where a ResevationList is just a wrapper around bool array. And then for each room subtype I created a new subtype of Reservation Manager so that we can later just resolve the user input of a room type to a certain ReservationManager
+and simply call the ReserveRoom method. I also used here the ad hoc polymorhpish(maybe a bit overhead but I wanted to try it) to eliminate all ifs in ReserveRoom. From the ReservationList ReserveRoom() we get ReservationResult
+
+
+@@@
+public interface ReservationResultVisitor
+{
+    RoomReservation Visit(SuccessfullyReserved result);
+
+    RoomReservation Visit(NoFreeRoms result);
+}
+
+public interface ReservationResult
+{
+    public RoomReservation Accept(ReservationResultVisitor visitor);
+}
+
+public class NoFreeRoms : ReservationResult
+{
+    public RoomReservation Accept(ReservationResultVisitor visitor) => visitor.Visit(this);
+}
+
+public class SuccessfullyReserved : ReservationResult
+{
+    public required int RoomNumber { get; init; }
+    public RoomReservation Accept(ReservationResultVisitor visitor) => visitor.Visit(this);
+}
+@@@
+
+
+and I decided to create these result wrappers to use them as types with ad hoc polymorphism. For that we actually have Visitor pattern - real thing. So our ReservationManager also implements the Visitor above so that every sub
+ReservationManager can implement "RoomReservation Visit(SuccessfullyReserved result);" and return appropriate Room
+
+
+@@@
+public class SingleRoomReservationManager(ReservationsList reservationsList) : ReservationManager(reservationsList)
+{
+    public override RoomReservation Visit(SuccessfullyReserved result) => new(true, new SingleRoom { RoomNumber = result.RoomNumber });
+    public override bool CanHandle(RoomRequest roomRequest) => roomRequest is SingleRoomRequest;
+
+    public override bool CanHandle(Room room) => room is SingleRoom;
+}
+@@@
+
+
+and exactly in this part of code we use the polymorphism and eliminate this huge switch with repetitive code
+
+
+@@@
+RoomReservation reservation = reservationManager.ReserveRoom();
+
+if (!reservation.Ok) return new Failure() { Reason = "Failed to reserve room" };
+
+var booking = bookingManager.BookRoom(reservation.Room!);
+@@@
+
+
+2)
+
+    public static void Availability(int i)
+    {
+        int count = 0;
+        switch (i)
+        {
+            case 1:
+                foreach (var room in HotelHolder.LuxuryDoubleroom)
+                {
+                    if (room == null)
+                        count++;
+                }
+
+                break;
+            case 2:
+                foreach (var room in HotelHolder.DeluxeDoubleroom)
+                {
+                    if (room == null)
+                        count++;
+                }
+
+                break;
+            case 3:
+                foreach (var room in HotelHolder.LuxurySingleroom)
+                {
+                    if (room == null)
+                        count++;
+                }
+
+                break;
+            case 4:
+                foreach (var room in HotelHolder.DeluxeSingleroom)
+                {
+                    if (room == null)
+                        count++;
+                }
+
+                break;
+            default:
+                Console.WriteLine("Enter valid option");
+                break;
+        }
+
+        Console.WriteLine("Number of rooms available: " + count);
+    }
+    
+
+Another monster with 17 cyclomatic complexity. The resulting code is
+
+
+@@@
+public bool CheckAvailability() => GetReservationFromInput().HasAvailableRooms();
+
+...
+
+private ReservationManager GetReservationFromInput()
+{
+    int roomType = userInputReader.ReadRoomType();
+    RoomRequest roomRequest = roomRequestResolver.Resolve(roomType);
+    return reservationRegistry.GetReservationManager(roomRequest);
+}
+...
+public bool HasAvailableRooms() => reservationsList.AnyRoomsAvailable;
+...
+public bool AnyRoomsAvailable => FirstAvailableRoom() is not Unavailable;
+
+private AvailabilityResult FirstAvailableRoom()
+{
+    for (int i = 0; i < _reservations.Length; i++)
+    {
+        if (!_reservations[i]) return new Available { RoomNumber = i };
+    }
+
+    return new Unavailable();
+}
+@@@
+
+
+Here I noticed these null checks everywhere and made sure that I do not use them. Subtype polymorphism helped again as well as extraction of repetitive/complex code into a separate function. I tried to avoid this for loop with LINQ
+but unfortunately the FirstOrDefault method's lambda does not take an index parameter of the current item. So there is no way I can get the index of first available room in efficient way without have to traverse the entire array 2+ times.
+To resolve the Incoming room request I use the table method
+
+
+@@@
+public class DictionaryRoomRequestResolver : RoomRequestResolver
+{
+    private readonly Dictionary<int, RoomRequest> _roomRequests = new()
+    {
+        { 1, new SingleRoomRequest() },
+        { 2, new SingleLuxuryRoomRequest() },
+        { 3, new DoubleRoomRequest() },
+        { 4, new DoubleLuxuryRoomRequest() }
+    };
+
+    public RoomRequest Resolve(int roomId) => _roomRequests[roomId];
+}
+@@@
+
+
+where we map each number to a concerete RoomRequest which is the translated into a ReservationManager. In the ReservationRegistry I use also subtype polymorpish to find the appropriate ReservationManager. It can be resolved using
+RoomRequest or Room when we for example want to checkout
+
+
+@@@
+public class ListReservationRegistry(List<ReservationManager> reservationManagers) : ReservationRegistry
+{
+    public ReservationManager GetReservationManager(RoomRequest roomRequest) => reservationManagers.First(rm => rm.CanHandle(roomRequest));
+
+    public ReservationManager GetReservationManager(Room room) => reservationManagers.First(rm => rm.CanHandle(room));
+}
+@@@
+
+
+In order to do it each of sub RegistrationMangers implements these methods with concrete types like I showed in the first example
+
+
+3)
+
+
+@@@
+    public static void Deallocate(int rn, int rtype)
+    {
+        char w;
+        switch (rtype)
+        {
+            case 1:
+                if (HotelHolder.LuxuryDoubleroom[rn] != null)
+                    Console.WriteLine("Room used by " + HotelHolder.LuxuryDoubleroom[rn].Name);
+                else
+                {
+                    Console.WriteLine("Empty Already");
+                    return;
+                }
+
+                Console.WriteLine("Do you want to checkout? (y/n)");
+                w = Console.ReadKey()
+                           .KeyChar;
+                if (w == 'y' || w == 'Y')
+                {
+                    Bill(rn, rtype);
+                    HotelHolder.LuxuryDoubleroom[rn] = null;
+                    Console.WriteLine("Deallocated successfully");
+                }
+
+                break;
+            case 2:
+                if (HotelHolder.DeluxeDoubleroom[rn] != null)
+                    Console.WriteLine("Room used by " + HotelHolder.DeluxeDoubleroom[rn].Name);
+                else
+                {
+                    Console.WriteLine("Empty Already");
+                    return;
+                }
+
+                Console.WriteLine("Do you want to checkout? (y/n)");
+                w = Console.ReadKey()
+                           .KeyChar;
+                if (w == 'y' || w == 'Y')
+                {
+                    Bill(rn, rtype);
+                    HotelHolder.DeluxeDoubleroom[rn] = null;
+                    Console.WriteLine("Deallocated successfully");
+                }
+
+                break;
+            case 3:
+                if (HotelHolder.LuxurySingleroom[rn] != null)
+                    Console.WriteLine("Room used by " + HotelHolder.LuxurySingleroom[rn].Name);
+                else
+                {
+                    Console.WriteLine("Empty Already");
+                    return;
+                }
+
+                Console.WriteLine("Do you want to checkout? (y/n)");
+                w = Console.ReadKey()
+                           .KeyChar;
+                if (w == 'y' || w == 'Y')
+                {
+                    Bill(rn, rtype);
+                    HotelHolder.LuxurySingleroom[rn] = null;
+                    Console.WriteLine("Deallocated successfully");
+                }
+
+                break;
+            case 4:
+                if (HotelHolder.DeluxeSingleroom[rn] != null)
+                    Console.WriteLine("Room used by " + HotelHolder.DeluxeSingleroom[rn].Name);
+                else
+                {
+                    Console.WriteLine("Empty Already");
+                    return;
+                }
+
+                Console.WriteLine("Do you want to checkout? (y/n)");
+                w = Console.ReadKey()
+                           .KeyChar;
+                if (w == 'y' || w == 'Y')
+                {
+                    Bill(rn, rtype);
+                    HotelHolder.DeluxeSingleroom[rn] = null;
+                    Console.WriteLine("Deallocated successfully");
+                }
+
+                break;
+            default:
+                Console.WriteLine("\nEnter valid option:");
+                break;
+        }
+    }
+@@@
+
+
+The first problem I saw here were again switches but there was also something new - elses. Alway avoid them. In my version I still have one if but just to check the success although if I would be a bit smarter and more experienced I
+think I would come up with a more generic approach how to eliminate them all
+
+
+@@@
+public string CheckoutRoom()
+{
+    Guid bookingId = userInputReader.ReadBookingId();
+    Booking.Booking booking = bookingManager.GetBooking(bookingId);
+    ReservationManager reservationManager = reservationRegistry.GetReservationManager(booking.Room);
+    CheckoutResult checkoutResult = reservationManager.CheckoutRoom(booking.Room);
+    return checkoutResult is not SuccessfullyCheckedOut ? "Failed to checkout" : bookingManager.CheckOut(booking);
+}
+@@@
+
+
+in my approach I utilized the syntax of ternary operator, same subtype/adhoc polymorhism for ReservationManager and all results objects which it returns.
+In most cases else indeed can be eliminated by restructuing logic or just using ternary operator. We could even omit here this console logging and just return
+
+
+@@@
+if (HotelHolder.DeluxeSingleroom[rn] == null) return;
+
+Console.WriteLine("Room used by " + HotelHolder.DeluxeSingleroom[rn].Name);
+Console.WriteLine("Do you want to checkout? (y/n)");
+@@@
+
+
+this logging would not bring much anyway... So eliminating else also was utilized!

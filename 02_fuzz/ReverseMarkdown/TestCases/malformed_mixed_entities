@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test</title></head>
+<body>
+  <p>Odd symbols: &amp; & < > " " <span style='color:red'>Red text maybe</span></p>
+  <br
+</body>
+</html>

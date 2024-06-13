@@ -1,0 +1,5 @@
+<html>
+<body>
+  <p>Some opening paragraph
+  <strong>Without closing
+  <a href="http://example.com>Broken link</a>

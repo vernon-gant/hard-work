@@ -1,0 +1,3 @@
+Here's an example of [a link with missing parenthesis  Or **bold that never closesOr a list:- Item one- Item two  - Sub-item missing dashInconsistent brackets for link and unclosed bold formatting.4. malformed_nesting.mdmarkdownCopyEdit# Overlapping emphasisText with *italic **and nesting* that doesn't **match up** properly
+
+Trying to see how the parser reacts to overlapping stars.

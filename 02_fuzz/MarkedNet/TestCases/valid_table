@@ -1,0 +1,6 @@
+| Header1 | Header2 | Header3 |
+|---------|---------|---------|
+| Cell1   | Cell2   | Cell3   |
+| **Bold** row | *Italic* row | [Link cell](http://example.com) |
+
+A simple table to see how the parser handles Markdown table syntax.
