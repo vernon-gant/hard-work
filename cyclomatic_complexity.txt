@@ -1,11 +1,16 @@
-I decided recently to study a really thrilling topic - cyclomatic complexity - or in other words how we can measure complexity our code. It is done by counting linearly independent exexution paths in the piece of code we examine.
-Normally it is a class or a function. The more the final value is the more complex and less maintainable becomes the code. Our goal - reduce this value in our code as much as possible. Ideally to 1 :)
-So now it's time to practcise - I found a repository with as I assume code written by a very green junior developer with cyclomatic complexity in some methods reaching 17! The goal is to reduce it minimum by halving this value
-using different techniques - eliminating ifs, elses, using polymorphism, table logic and so on. Because the project was really bad I spent more time on trying to restructure the code in terms of our problem and not in all apsects.
-But because it was bad there were a lot of things to learn! I will for sure find here 2-3 good examples.
+I recently decided to study a really thrilling topic - cyclomatic complexity - or in other words, how we can measure the complexity of our code.
+It is done by counting linearly independent execution paths in the piece of code we examine.
+Normally, it is a class or a function. The higher the final value, the more complex and less maintainable the code becomes.
+Our goal is to reduce this value in our code as much as possible, ideally to 1 :)
+
+So now it's time to practice - I found a repository with, as I assume, code written by a very green junior developer with cyclomatic complexity in some methods reaching 17!
+The goal is to reduce it at least by halving this value using different techniques - eliminating ifs, elses, using polymorphism, table logic, and so on.
+Because the project was really bad, I spent more time trying to restructure the code in terms of our problem and not in all aspects.
+But because it was bad, there were a lot of things to learn! I will for sure find here 2-3 good examples.
 
 
 1)
+
 
 @@@
     public static void BookRoom(int i)
@@ -82,11 +87,14 @@ But because it was bad there were a lot of things to learn! I will for sure find
         Console.WriteLine("Room Booked");
     }
 @@@
-   
+
+
 Here is the first monster with 17 cyclomatic complexity! We would have to write here 17 tests only for this method. The main problem is this switch with repeating code inside. The core idea of the program is to book rooms in a hotel.
-And the programmer just uses static arrays in the Holder and has only two types of rooms although it works with 4. So I decided to refactor it completely and but explanation I will start from top to bottom. I defined all operations
-this guy has in the main Hotel class and extracted them in interface
-    
+And the programmer just uses static arrays in the Holder and has only two types of rooms although it works with 4. So I decided to refactor it completely but explanation I will start from top to bottom. I defined all operations
+this guy has in the main Hotel class and extracted them in a separate interface
+
+
+@@@
 public interface FlowCoordinator
 {   
     public BookingResult ReserveRoom();
@@ -99,13 +107,16 @@ public interface FlowCoordinator
 
     public string ShowRoomFeatures();
 }
+@@@
 
 
 Implementation uses also newly created abstractions
 
+
 @@@
 public class ConsoleInputFlowCoordinator(BookingManager bookingManager, ReservationRegistry reservationRegistry, UserInputReader userInputReader, RoomRequestResolver roomRequestResolver) : FlowCoordinator
 @@@
+
 
 New method has cyclomatic complexity of 1
 
@@ -129,7 +140,9 @@ New method has cyclomatic complexity of 1
     }
 @@@
 
-The main approach I used here is normal subtype polymorphism for the ReservationManager. I defined firstly an abstract Room class and 4 subtypes for our rooms.
+
+The approach I used here is a normal subtype polymorphism for the ReservationManager. I defined firstly an abstract Room class and 4 subtypes for every concrete room.
+
 
 @@@
 public abstract class Room
@@ -158,7 +171,9 @@ public class SingleRoom : Room
 and others
 @@@
 
+
 and for each of them it makes sense to have a separate entity for handling reservations of different types of rooms but with one common interface. So I created
+
 
 @@@
 public abstract class ReservationManager(ReservationsList reservationsList) : ReservationResultVisitor
@@ -179,8 +194,10 @@ public abstract class ReservationManager(ReservationsList reservationsList) : Re
 }
 @@@
 
+
 where a ResevationList is just a wrapper around bool array. And then for each room subtype I created a new subtype of Reservation Manager so that we can later just resolve the user input of a room type to a certain ReservationManager
 and simply call the ReserveRoom method. I also used here the ad hoc polymorhpish(maybe a bit overhead but I wanted to try it) to eliminate all ifs in ReserveRoom. From the ReservationList ReserveRoom() we get ReservationResult
+
 
 @@@
 public interface ReservationResultVisitor
@@ -207,8 +224,10 @@ public class SuccessfullyReserved : ReservationResult
 }
 @@@
 
+
 and I decided to create these result wrappers to use them as types with ad hoc polymorphism. For that we actually have Visitor pattern - real thing. So our ReservationManager also implements the Visitor above so that every sub
 ReservationManager can implement "RoomReservation Visit(SuccessfullyReserved result);" and return appropriate Room
+
 
 @@@
 public class SingleRoomReservationManager(ReservationsList reservationsList) : ReservationManager(reservationsList)
@@ -220,7 +239,9 @@ public class SingleRoomReservationManager(ReservationsList reservationsList) : R
 }
 @@@
 
+
 and exactly in this part of code we use the polymorphism and eliminate this huge switch with repetitive code
+
 
 @@@
 RoomReservation reservation = reservationManager.ReserveRoom();
@@ -229,7 +250,6 @@ if (!reservation.Ok) return new Failure() { Reason = "Failed to reserve room" };
 
 var booking = bookingManager.BookRoom(reservation.Room!);
 @@@
-
 
 
 2)
@@ -282,6 +302,7 @@ var booking = bookingManager.BookRoom(reservation.Room!);
 
 Another monster with 17 cyclomatic complexity. The resulting code is
 
+
 @@@
 public bool CheckAvailability() => GetReservationFromInput().HasAvailableRooms();
 
@@ -309,9 +330,11 @@ private AvailabilityResult FirstAvailableRoom()
 }
 @@@
 
-Here I saw these null checks everywhere and made sure that I do not use them. Subtype polymorphism helped again as well as extraction of repetitive/complex code into a separate function. I tried to avoid this for loop with LINQ
+
+Here I noticed these null checks everywhere and made sure that I do not use them. Subtype polymorphism helped again as well as extraction of repetitive/complex code into a separate function. I tried to avoid this for loop with LINQ
 but unfortunately the FirstOrDefault method's lambda does not take an index parameter of the current item. So there is no way I can get the index of first available room in efficient way without have to traverse the entire array 2+ times.
 To resolve the Incoming room request I use the table method
+
 
 @@@
 public class DictionaryRoomRequestResolver : RoomRequestResolver
@@ -328,8 +351,10 @@ public class DictionaryRoomRequestResolver : RoomRequestResolver
 }
 @@@
 
+
 where we map each number to a concerete RoomRequest which is the translated into a ReservationManager. In the ReservationRegistry I use also subtype polymorpish to find the appropriate ReservationManager. It can be resolved using
 RoomRequest or Room when we for example want to checkout
+
 
 @@@
 public class ListReservationRegistry(List<ReservationManager> reservationManagers) : ReservationRegistry
@@ -340,9 +365,8 @@ public class ListReservationRegistry(List<ReservationManager> reservationManager
 }
 @@@
 
+
 In order to do it each of sub RegistrationMangers implements these methods with concrete types like I showed in the first example
-
-
 
 
 3)
@@ -445,6 +469,7 @@ In order to do it each of sub RegistrationMangers implements these methods with 
 The first problem I saw here were again switches but there was also something new - elses. Alway avoid them. In my version I still have one if but just to check the success although if I would be a bit smarter and more experienced I
 think I would come up with a more generic approach how to eliminate them all
 
+
 @@@
 public string CheckoutRoom()
 {
@@ -456,8 +481,10 @@ public string CheckoutRoom()
 }
 @@@
 
+
 in my approach I utilized the syntax of ternary operator, same subtype/adhoc polymorhism for ReservationManager and all results objects which it returns.
 In most cases else indeed can be eliminated by restructuing logic or just using ternary operator. We could even omit here this console logging and just return
+
 
 @@@
 if (HotelHolder.DeluxeSingleroom[rn] == null) return;
@@ -465,5 +492,6 @@ if (HotelHolder.DeluxeSingleroom[rn] == null) return;
 Console.WriteLine("Room used by " + HotelHolder.DeluxeSingleroom[rn].Name);
 Console.WriteLine("Do you want to checkout? (y/n)");
 @@@
+
 
 this logging would not bring much anyway... So eliminating else also was utilized!
