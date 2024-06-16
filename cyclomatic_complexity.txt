@@ -1,12 +1,9 @@
-I recently decided to study a really thrilling topic - cyclomatic complexity - or in other words, how we can measure the complexity of our code.
-It is done by counting linearly independent execution paths in the piece of code we examine.
-Normally, it is a class or a function. The higher the final value, the more complex and less maintainable the code becomes.
-Our goal is to reduce this value in our code as much as possible, ideally to 1 :)
+@@@ Cyclomatic complexity practise
 
-So now it's time to practice - I found a repository with, as I assume, code written by a very green junior developer with cyclomatic complexity in some methods reaching 17!
+I found a repository with, as I assume, code written by a very green junior developer with cyclomatic complexity in some methods reaching 17!
 The goal is to reduce it at least by halving this value using different techniques - eliminating ifs, elses, using polymorphism, table logic, and so on.
 Because the project was really bad, I spent more time trying to restructure the code in terms of our problem and not in all aspects.
-But because it was bad, there were a lot of things to learn! I will for sure find here 2-3 good examples.
+But because it was bad, there were a lot of things to learn!
 
 
 1)
