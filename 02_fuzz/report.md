@@ -22,19 +22,23 @@ Although we can try to test any method or function using fuzzing, in some cases 
 
 I did not know what to expect and just composed the corpus using different patterns in text and started the fuzzing session. After 16 minutes and 150 covered paths I realized that I do not get here any crashes, simply because I did not find myself any places where I would have a `IndexOutOufBounds` trap or smth else. We just split and count unique. So no crashes found.
 
-// First report
+![1](https://github.com/user-attachments/assets/16bbec43-31b4-476d-921a-3107f1ab7be9)
+
+Now I understand also why we need to execute these tests on stong machines - my dell was not ready for such load. I accidently run the same test 2 times and the CPU load went up to 60%...
+
 
 ### 2. HTML to MD
 
 So I thought we need something highly data driven and format dependent so that our smart tool can challenge the logic. Best projects for this are parsers, converters and so on. But my mistake was that I took a project which has 1k stars on github, so people probably trust it and it is well tested in production(probably). After one hour of tests - no crashes found.
 
-// Second report
+![2](https://github.com/user-attachments/assets/9f1f11af-3d26-488c-b654-a7791fc74409)
+
 
 ### 3. INI, TOML and instrumentation problems...
 
 That's why I decided to take a project with 20-100 starts on github and test it. And here it is - `perform_dry_run` problem.
 
-// perform dry run
+![3](https://github.com/user-attachments/assets/45f2e157-a0eb-40e0-9f9a-e80b326fd22c)
 
 For some reason when I tried to test 3 completely different projects - 2 for INI parsing and 1 for TOML file parsing, I got crashes for ***valid*** test cases before start of the fuzzer. And this is really weird, because after running same input from main manually I did not encounter any exception at all. I repeated this for 3 different libraries, they are completely unrelated.
 
