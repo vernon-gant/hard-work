@@ -1,44 +1,48 @@
 # Fuzz testing
 
-Did not know at all that there exists such a testing approach. Although primarily developed for testing programs written in unsafe languages like C and C++, we can easily use it in our favorite managed languages to check for unhandled `OutOfBounds` or `FormatException`. I decided to research how we can apply this art of testing for C# programs.
+Did not know at all that there exists such testing approach. Although primarily developed for testing programs written in unsafe languages like C and C++ we can easliy use it in our favourite managed languages to check for unhandled `OutOfBounds` or `FormatException`. I deciede to research how we can apply this art of testing for C# programs.
 
 ## Environment
 
-The first problem - or even thought - was that we need a way to instrument our C# code, because after reading the AFL short docs I quickly understood that it needs access to native code as it instruments the code paths to manipulate the input later in order to explore new paths and increase coverage.
+First problem or even thought was that we need a way how to instrument our C# code, because after reading the AFL short docs I quickly understood that it needs access to native code as it instruments the paths inside of the code to manipulate the input later in order to explore new paths and increase coverage.
 
-This problem has already been solved by smart people :) There is a library called `SharpFuzz` which offers a command line tool for instrumenting the C# DLLs. As it turned out later, this might also be the root of the problems.
+This problem has already been solved by smart people :) There is a library called `SharpFuzz` which offers a command line tool for instrumenting the C# dlls. As turned out later this might be also the root of problems.
 
-To make things work, the best way is to use WSL, install .NET 8 and then install the AFL tool. Or we can also download the sources and build it ourselves with make.
+To make things work best way is to use the WSL, install .NET 8 and then install the afl tool. Or we can also download the sources and build it ourselves with make.
 
-Actually, that's it. The library also offers a PowerShell script for a fast run of AFL, so I also installed PowerShell on WSL :) The rest is just to configure the projects under test.
+Actualy that's it. Library also offers a ps script for fast run of afl, so I also installed powershell on wsl :) The rest is just to configure PUT projects.
 
-One important point, which was not mentioned in the lib docs and confused me at the beginning, is that the project which will be started by AFL must not contain any code that is to be tested. In other words, we must have a dedicated class library which we reference from the running project, because all referenced DLLs are instrumented by the command line tool before the AFL call in the PowerShell script.
+One important point, which was not mentioned in the lib docs and confused me at the beginning,is that the project which will be started by afl must not contain any code which must be tested. In other words we must have a dedicated class library wich we reference from the running project. Because all referenced dlls are instrumnented by the command line tool before the afl call in the ps script.
 
 ## Projects
 
 ### 1. Word counting
 
-Although we can try to test any method or function using fuzzing, in some cases it will be very hard to come up with a meaningful strategy when we have a function which takes 2 ints and one custom data type with one double and one bool inside. The best projects to test are some string-driven projects. I had only one such project - the WordCounting project which was our final assignment on the functional programming course.
+Although we can try to test any method or function using fuzzing, in some cases it will be very hard to come up with meaningful strategy when we have a function which takes 2 ints and one custom data type with 1 double and one bool inside. Best projects to test are some string driven projects. I had only one such project - the WordCounting project which was our final assignment on the functional programming course.
 
-I did not know what to expect and just composed the corpus using different patterns in text and started the fuzzing session. After 16 minutes and 150 covered paths I realized that I did not get any crashes, simply because I did not find any places where I would have an `IndexOutOfBounds` trap or something else. We just split and count unique. So no crashes found.
+I did not know what to expect and just composed the corpus using different patterns in text and started the fuzzing session. After 16 minutes and 150 covered paths I realized that I do not get here any crashes, simply because I did not find myself any places where I would have a `IndexOutOufBounds` trap or smth else. We just split and count unique. So no crashes found.
 
-// First report
+![1](https://github.com/user-attachments/assets/16bbec43-31b4-476d-921a-3107f1ab7be9)
+
+Now I understand also why we need to execute these tests on stong machines - my dell was not ready for such load. I accidently run the same test 2 times and the CPU load went up to 60%...
+
 
 ### 2. HTML to MD
 
-So I thought we needed something highly data-driven and format-dependent so that our smart tool can challenge the logic. The best projects for this are parsers, converters, and so on. But my mistake was that I took a project which has 1k stars on GitHub, so people probably trust it and it is well tested in production (probably). After one hour of tests - no crashes found.
+So I thought we need something highly data driven and format dependent so that our smart tool can challenge the logic. Best projects for this are parsers, converters and so on. But my mistake was that I took a project which has 1k stars on github, so people probably trust it and it is well tested in production(probably). After one hour of tests - no crashes found.
 
-// Second report
+![2](https://github.com/user-attachments/assets/9f1f11af-3d26-488c-b654-a7791fc74409)
+
 
 ### 3. INI, TOML and instrumentation problems...
 
-That's why I decided to take a project with 20–100 stars on GitHub and test it. And here it is - the `perform_dry_run` problem.
+That's why I decided to take a project with 20-100 starts on github and test it. And here it is - `perform_dry_run` problem.
 
-// perform dry run
+![3](https://github.com/user-attachments/assets/45f2e157-a0eb-40e0-9f9a-e80b326fd22c)
 
-For some reason, when I tried to test three completely different projects - two for INI parsing and one for TOML file parsing - I got crashes for ***valid*** test cases before the fuzzer even started. And this is really weird, because after running the same input from main manually, I did not encounter any exception at all. I repeated this for three different libraries; they are completely unrelated.
+For some reason when I tried to test 3 completely different projects - 2 for INI parsing and 1 for TOML file parsing, I got crashes for ***valid*** test cases before start of the fuzzer. And this is really weird, because after running same input from main manually I did not encounter any exception at all. I repeated this for 3 different libraries, they are completely unrelated.
 
-The most interesting part is that these exceptions occurred even when I wrapped the whole code in the callback for the fuzzer in a `try/catch` block:
+The most interesting is that these exceptions occured event when I set the whole code within the calback for fuzzer in `try/catch` block
 
 ```c#
 Fuzzer.OutOfProcess.Run(s =>
@@ -55,12 +59,13 @@ Fuzzer.OutOfProcess.Run(s =>
 });
 ```
 
-Even in this case the test crashed with the same message. I spent over 10 hours on this problem and I cannot really find a root cause, because there is no direct way to track where the exception occurs - this is a prerun of the entire corpus, and AFL does not report it as a crash. The only guess I have is that there is some internal problem with the binary - aka, something went wrong during instrumentation or whatever.
+Even in this case the test crashed with the same message. I spent with this problem 10+ hours and I can not really find a root cause, because there is no direct way to track where the exception occurs - this is prerun of the whole corpus body and afl does not report it as crash. The only guess which I have is some internal problem with the binary aka something went wrong during instrumentation or whatever.
+
 
 ## Conclusion
 
-The problem above is probably the price we - developers in high- level languages - have to pay for using such tools. Libraries do the whole magic behind the scenes, but sometimes because of this magic we cannot track what is happening in reality.
+The problem above is probably the price which we - developers on high level languages - have to pay for using such tools. Libraries do the whole magic behind the scenes but sometimes because of this magic we can not track what is happenning in reality.
 
-However, the idea seems veeery interesting to me. I'll definitely ask my team lead about it - maybe we can test something in our project with this magic.
+However the idea seems veeery interesting to me. Will definitely ask my team lead about it - maybe we can test smth in our project with this magic.
 
-Now I know how to quickly set up C# fuzz testing and even what dictionaries are in the context of fuzz testing :) I can also be proud of my word count project - no crashes is already a win...
+Now I know how to quickly setup the C# fuzz testing and even what are dictionaries in the context of fuzz testing :) Can be also proud of my word count project - no crashes is already a win...
