@@ -1,0 +1,51 @@
+﻿{
+  AssetHeaders: [
+    Title,
+    Category,
+    Condition,
+    Author,
+    ISBN,
+    Publisher,
+    YearPublished,
+    Price,
+    Rating
+  ],
+  AssetCategoryTitles: [
+    Fantasy,
+    Dystopian
+  ],
+  AssetConditionTitles: [
+    New,
+    Used
+  ],
+  ParsedEntries: [
+    {
+      RowNumber: 2,
+      Asset: {
+        Author: J.R.R. Tolkien,
+        ISBN: 978-0547928227,
+        Publisher: Houghton Mifflin,
+        YearPublished: 1937,
+        Price: 15.99,
+        Rating: 4.5,
+        Title: The Hobbit,
+        Category: Fantasy,
+        Condition: New
+      }
+    },
+    {
+      RowNumber: 3,
+      Asset: {
+        Author: George Orwell,
+        ISBN: 978-0451524935,
+        Publisher: Signet Classic,
+        YearPublished: 1949,
+        Price: 8.5,
+        Rating: 4.8,
+        Title: 1984,
+        Category: Dystopian,
+        Condition: Used
+      }
+    }
+  ]
+}
