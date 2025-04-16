@@ -295,6 +295,6 @@ var tourDTOBuildingResult = new EntityParserBuilder<TourDTO>(["Name", "Descripti
     .Build();
 ```
 
-I really learned a lot in terms of thinking on the logical level here - it was hard, because requires treating all small details as important and thinking about them in terms of abstractions.
+I really learned a lot in terms of thinking on the logical level here - it was hard, because requires treating all small details as important and thinking about them in terms of abstractions. In this case our design - that we want to control building of our desired entity parser - is followed by the code 1 to 1. We simply put these concepts into the code. Nothing more.
 
 This was the first iteration, so it took impressive 8 hours, because I tried to make myself think on the third level and had no idea about some C# internals.
