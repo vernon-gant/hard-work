@@ -61,13 +61,7 @@ namespace NEventStore
 but something like
 
 ```
-/// <summary>
-/// Represents a logically atomic batch of domain events(from one to many) that has been persisted to the event store. Each commit is immutable and scoped to a single event stream, forming the abstraction of the append-only storage model. Each commit is produced by persisting a CommitAttempt through ICommitEvents, which abstracts durable interaction with the underlying store.
-/// </summary>
-public interface ICommit
-{
-
-}
+Represents a logically atomic batch of domain events(from one to many) that has been persisted to the event store. Each commit is immutable and scoped to a single event stream, forming the abstraction of the append-only storage model. Each commit is produced by persisting a CommitAttempt through ICommitEvents, which abstracts durable interaction with the underlying store.
 ```
 
 We could add even more relations between entities, because this would give the reader an idea of how ADTs relate to each other. Of course I got it later myself - however I had to figure it out  through code. And of course it took me a lot of time. After reading this we can quickly jump to say ICommitEvents, to its implementation, look for CommitAttempt and how to work with it - because we know the high level design. I wish I had it 2 years ago...
@@ -123,11 +117,7 @@ public class OrderBuilder<T>
 As we know the code should know nothing about the program itself. However without knowing what Order they mean here - I swear I could not understand how ascending and descending relate to the Order - because I was thinking about the normal order which is placed by the customer, without knowing what components it interacts with, it is very hard to get the idea. So after some investigation
 
 ```c#
-/// Builder for defining sort order for database queries. Used to construct composite ordering over fields when creating indexes or fetching ordered results. Consumed by components like IDatabaseContext.CreateIndex. Main idea is to expresses intent declaratively and hides low-level indexing mechanics.
-public class OrderBuilder<T>
-{
-    ...
-}
+Builder for defining sort order for database queries. Used to construct composite ordering over fields when creating indexes or fetching ordered results. Consumed by components like IDatabaseContext.CreateIndex. Main idea is to expresses intent declaratively and hides low-level indexing mechanics.
 ```
 
 Same idea - we describe how this component integrates into the system architecture. Of course we do not duplicate the architecture of the system - we just descirbe the integration to the parts where it is used or is supposed to be used. Like here - we mention that the idea is to build ordering for queries declaratively. We also menion where it is used. Plain and simple.
@@ -165,11 +155,5 @@ public interface IPlugin
 Yes we see the repetition of method names in the comments, however it is not clear how this component integrates into the system. And I was interested excaly in this. So after some investigation I figured out what the difference is. Plugins are like installable feature components - for example app provides us ShippingPointRatePlugin, SliderWidgetPlugin, FixedRateTaxPlugin and other plugins. They implement the contract and can be added or removed dynamically. On opposite, modules are larger feature blocks loaded at runtime based on the configuration. They can not be installed or uninstalled. This brings us to
 
 ```c#
-/// Defines a contract for dynamically loaded, self-contained features that can be installed, uninstalled, and configured at runtime.
-/// Plugins extend the system with optional functionality (e.g., payments, integrations) and are managed through metadata in <see cref="PluginInfo"/>.
-/// Unlike modules, plugins follow a controlled lifecycle and can be conditionally included without application redeployment.
-public interface IPlugin
-{
-    ...
-}
+Defines a contract for dynamically loaded, self-contained features that can be installed, uninstalled, and configured at runtime. Plugins extend the system with optional functionality (payments, integrations) and are managed through metadata in PluginInfo. Unlike modules, plugins follow a controlled lifecycle and can be conditionally included without application redeployment.
 ```
