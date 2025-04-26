@@ -10,12 +10,13 @@ public class ListTrain(IValidator<InsertionContext> insertionValidator) : ITrain
 
     public OneOf<Success, Error<string>> InsertCarriage(ICarriage carriage, int idx)
     {
-        throw new NotImplementedException();
+        _carriages.Add(carriage);
+        return new Success();
     }
 
     public OneOf<List<ICarriage>, IdxOutOfRange> GetFromIdxInclusive(int idx)
     {
-        throw new NotImplementedException();
+        return _carriages.GetRange(idx, Count - idx);
     }
 
     public int Count => _carriages.Count;
