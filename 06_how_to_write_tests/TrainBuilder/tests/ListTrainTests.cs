@@ -68,4 +68,38 @@ public class ListTrainTests
         });
     }
 
+    [Test]
+    public void GivenNonEmptyTrain_WhenInsertingAtLastIndex_ShouldAppendNewCarriage()
+    {
+        var existingCarriage1 = Substitute.For<ICarriage>();
+        var existingCarriage2 = Substitute.For<ICarriage>();
+        var newCarriage = Substitute.For<ICarriage>();
+        _validator.Validate(Arg.Any<InsertionContext>()).Returns(new FluentValidation.Results.ValidationResult());
+
+        // Arrange: Insert two carriages
+        _train.InsertCarriage(existingCarriage1, 0);
+        _train.InsertCarriage(existingCarriage2, 1);
+
+        // Act: Insert new carriage at index equal to Count (i.e., append)
+        var insertResult = _train.InsertCarriage(newCarriage, 2);
+
+        // Assert: Insertion result and updated train state
+        Assert.Multiple(() =>
+        {
+            Assert.That(insertResult.IsT0);
+            Assert.That(_train.Count, Is.EqualTo(3));
+        });
+
+        // Assert: Carriages are in correct order
+        var carriagesResult = _train.GetFromIdxInclusive(0);
+        Assert.Multiple(() =>
+        {
+            Assert.That(carriagesResult.IsT0);
+            var carriages = carriagesResult.AsT0;
+            Assert.That(carriages, Has.Count.EqualTo(3));
+            Assert.That(carriages[0], Is.EqualTo(existingCarriage1));
+            Assert.That(carriages[1], Is.EqualTo(existingCarriage2));
+            Assert.That(carriages[2], Is.EqualTo(newCarriage));
+        });
+    }
 }
