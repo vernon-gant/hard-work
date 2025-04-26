@@ -24,7 +24,7 @@ public class InsertionValidator : AbstractValidator<InsertionContext>
             });
     }
 
-    private static bool HaveIndexBetweenZeroAndCurrentTrainCount(InsertionContext context) => context.Idx >= 0 && context.Idx < context.Train.Count;
+    private static bool HaveIndexBetweenZeroAndCurrentTrainCount(InsertionContext context) => context.Idx >= 0 && context.Idx <= context.Train.Count;
 
     private static bool BeNotFull(InsertionContext context) => context.Train.Count < MaxTrainSize;
 
