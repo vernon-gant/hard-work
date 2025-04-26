@@ -22,7 +22,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void WhenTrainIsFull_MustReturnFalse()
+    public void GivenFullTrain_ThenValidationFails()
     {
         _train.Count.Returns(MaxTrainSize);
         var context = new InsertionContext(_train, 5, _carriage);
@@ -33,7 +33,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void WhenInsertionIdxIsNegative_MustReturnFalse()
+    public void GivenNegativeIndex_ThenValidationFails()
     {
         _train.Count.Returns(DefaultTrainSize);
         var context = new InsertionContext(_train, -1, _carriage);
@@ -44,7 +44,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void WhenInsertionIdxIsBiggerThanCurrentCount_TrainIsEmpty_MustReturnFalse()
+    public void GivenEmptyTrain_WhenInsertingAtIndexGreaterThanZero_ThenValidationFails()
     {
         _train.Count.Returns(0);
         var context = new InsertionContext(_train, 1, _carriage);
@@ -55,7 +55,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void WhenInsertionIdxIsBiggerThanCurrentCount_TrainIsNotEmpty_MustReturnFalse()
+    public void GivenNonEmptyTrain_WhenInsertingAtIndexGreaterThanCount_ThenValidationFails()
     {
         _train.Count.Returns(DefaultTrainSize);
         var context = new InsertionContext(_train, DefaultTrainSize + 1, _carriage);
@@ -66,7 +66,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void WhenInsertionIdxIs0_TrainIsEmpty_MustReturnTrue()
+    public void GivenEmptyTrain_WhenInsertingAtIndexZero_ThenValidationSucceeds()
     {
         _train.Count.Returns(0);
         var context = new InsertionContext(_train, 0, _carriage);
@@ -77,7 +77,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void WhenInsertionIdxIs0_TrainIsNotEmpty_MustReturnTrue()
+    public void GivenNonEmptyTrain_WhenInsertingAtIndexZero_ThenValidationSucceeds()
     {
         _train.Count.Returns(DefaultTrainSize);
         var context = new InsertionContext(_train, 0, _carriage);
@@ -88,7 +88,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void WhenInsertionIdxIsIsEqualToTrainCount_TrainIsNotFull_MustReturnTrue()
+    public void GivenNonFullTrain_WhenInsertingAtLastValidIndex_ThenValidationSucceeds()
     {
         _train.Count.Returns(DefaultTrainSize);
         var context = new InsertionContext(_train, DefaultTrainSize, _carriage);
@@ -99,7 +99,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void WhenInsertionIdxIsHalfOfCount_TrainIsNotFull_MustReturnTrue()
+    public void GivenNonFullTrain_WhenInsertingAtMiddleIndex_ThenValidationSucceeds()
     {
         _train.Count.Returns(DefaultTrainSize);
         var context = new InsertionContext(_train, DefaultTrainSize / 2, _carriage);
@@ -110,7 +110,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void WhenInserting10thCarriage_MustReturnTrue()
+    public void GivenTrainWithNineCarriages_WhenInsertingTenthCarriage_ThenValidationSucceeds()
     {
         _train.Count.Returns(MaxTrainSize - 1);
         var context = new InsertionContext(_train, MaxTrainSize - 1, _carriage);
@@ -121,7 +121,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void SleeperCarriage_WhenNo2PassengerCarriagesAfterInsertionIdx_MustReturnFalse()
+    public void GivenSleeperCarriage_WhenNoTwoPassengerCarriagesAfterInsertion_ThenValidationFails()
     {
         _train.Count.Returns(DefaultTrainSize);
         const int insertionIdx = 0;
@@ -135,7 +135,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void SleeperCarriage_WhenInsertingAtTheEnd_MustReturnFalse()
+    public void GivenSleeperCarriage_WhenInsertingAtEndOfTrain_ThenValidationFails()
     {
         _train.Count.Returns(DefaultTrainSize);
         const int insertionIdx = DefaultTrainSize;
@@ -149,7 +149,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void SleeperCarriage_WhenOnlyOnePassengerCarriageAfterInsertionIdx_MustReturnFalse()
+    public void GivenSleeperCarriage_WhenOnlyOnePassengerCarriageAfterInsertion_ThenValidationFails()
     {
         _train.Count.Returns(DefaultTrainSize);
         const int insertionIdx = 3;
@@ -163,7 +163,7 @@ public class InsertionValidatorTests
     }
 
     [Test]
-    public void WhenSleeperRuleIsSatisfied_MustReturnTrue()
+    public void GivenSleeperCarriage_WhenTwoPassengerCarriagesAfterInsertion_ThenValidationSucceeds()
     {
         _train.Count.Returns(DefaultTrainSize);
         const int insertionIdx = 2;
