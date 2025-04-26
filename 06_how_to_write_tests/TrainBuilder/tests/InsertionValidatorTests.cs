@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using FluentValidation.Results;
+using NSubstitute;
 
 namespace TrainBuilder.tests;
 
@@ -27,11 +28,7 @@ public class InsertionValidatorTests
 
         var result = _validator.Validate(context);
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(result.IsValid, Is.False);
-            Assert.That(result.Errors, Has.Count.EqualTo(1));
-        });
+        AssertValidationFailed(result);
     }
 
     [Test]
@@ -42,6 +39,11 @@ public class InsertionValidatorTests
 
         var result = _validator.Validate(context);
 
+        AssertValidationFailed(result);
+    }
+
+    private static void AssertValidationFailed(ValidationResult result)
+    {
         Assert.Multiple(() =>
         {
             Assert.That(result.IsValid, Is.False);
