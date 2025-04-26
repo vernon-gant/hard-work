@@ -11,7 +11,9 @@ public interface ITrain
 
     int Count { get; }
 
-    string Print { get; }
+    OneOf<string, EmptyTrain> Print { get; }
 }
+
+public struct EmptyTrain;
 
 public struct CarriageOutOfRange;
