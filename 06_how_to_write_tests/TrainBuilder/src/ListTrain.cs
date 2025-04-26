@@ -10,7 +10,7 @@ public class ListTrain(IValidator<InsertionContext> insertionValidator) : ITrain
 
     public OneOf<Success, Error<string>> InsertCarriage(ICarriage carriage, int idx)
     {
-        _carriages.Add(carriage);
+        _carriages.Insert(idx, carriage);
         return new Success();
     }
 
