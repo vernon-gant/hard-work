@@ -130,4 +130,24 @@ public class ListTrainTests
             Assert.That(carriages[3], Is.EqualTo(carriage3));
         });
     }
+
+    [Test]
+    public void GivenInvalidInsertion_WhenValidatorFails_ShouldReturnErrorWithMessage()
+    {
+        var carriage = Substitute.For<ICarriage>();
+
+        _validator.Validate(Arg.Any<InsertionContext>())
+            .Returns(new FluentValidation.Results.ValidationResult([
+                new FluentValidation.Results.ValidationFailure("idx", "Index is invalid")
+            ]));
+
+        var result = _train.InsertCarriage(carriage, -100);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsT1);
+            Assert.That(result.AsT1.Value, Is.EqualTo("Index is invalid"));
+            Assert.That(_train.Count, Is.EqualTo(0));
+        });
+    }
 }
