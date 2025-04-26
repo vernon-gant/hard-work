@@ -2,6 +2,8 @@
 
 public abstract class BaseCarriage : ICarriage
 {
+    protected const int DefaultCapacity = 20;
+
     protected BaseCarriage(int capacity)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(capacity);
