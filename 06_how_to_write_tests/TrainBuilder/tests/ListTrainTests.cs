@@ -165,4 +165,19 @@ public class ListTrainTests
             Assert.That(resultPositive.IsT1);
         });
     }
+
+    [Test]
+    public void GivenNonEmptyTrain_WhenGettingFromNegativeIndex_ShouldReturnIdxOutOfRange()
+    {
+        var carriage = Substitute.For<ICarriage>();
+        _validator.Validate(Arg.Any<InsertionContext>()).Returns(new FluentValidation.Results.ValidationResult());
+        _train.InsertCarriage(carriage, 0);
+
+        var result = _train.GetFromIdxInclusive(-1);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsT1);
+        });
+    }
 }

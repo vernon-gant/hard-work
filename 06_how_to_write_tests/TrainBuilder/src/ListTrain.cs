@@ -22,7 +22,7 @@ public class ListTrain(IValidator<InsertionContext> insertionValidator) : ITrain
 
     public OneOf<List<ICarriage>, IdxOutOfRange> GetFromIdxInclusive(int idx)
     {
-        if (_carriages.Count == 0)
+        if (_carriages.Count == 0 || idx < 0 || idx >= _carriages.Count)
             return new IdxOutOfRange();
 
         return _carriages.GetRange(idx, Count - idx);
