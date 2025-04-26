@@ -75,31 +75,59 @@ public class ListTrainTests
         var existingCarriage2 = Substitute.For<ICarriage>();
         var newCarriage = Substitute.For<ICarriage>();
         _validator.Validate(Arg.Any<InsertionContext>()).Returns(new FluentValidation.Results.ValidationResult());
-
-        // Arrange: Insert two carriages
         _train.InsertCarriage(existingCarriage1, 0);
         _train.InsertCarriage(existingCarriage2, 1);
 
-        // Act: Insert new carriage at index equal to Count (i.e., append)
+
         var insertResult = _train.InsertCarriage(newCarriage, 2);
 
-        // Assert: Insertion result and updated train state
         Assert.Multiple(() =>
         {
             Assert.That(insertResult.IsT0);
             Assert.That(_train.Count, Is.EqualTo(3));
         });
-
-        // Assert: Carriages are in correct order
-        var carriagesResult = _train.GetFromIdxInclusive(0);
         Assert.Multiple(() =>
         {
+            var carriagesResult = _train.GetFromIdxInclusive(0);
             Assert.That(carriagesResult.IsT0);
             var carriages = carriagesResult.AsT0;
             Assert.That(carriages, Has.Count.EqualTo(3));
             Assert.That(carriages[0], Is.EqualTo(existingCarriage1));
             Assert.That(carriages[1], Is.EqualTo(existingCarriage2));
             Assert.That(carriages[2], Is.EqualTo(newCarriage));
+        });
+    }
+
+    [Test]
+    public void GivenNonEmptyTrain_WhenInsertingAtMiddleIndex_ShouldInsertCorrectlyAndShiftOthers()
+    {
+        var carriage1 = Substitute.For<ICarriage>();
+        var carriage2 = Substitute.For<ICarriage>();
+        var carriage3 = Substitute.For<ICarriage>();
+        var newCarriage = Substitute.For<ICarriage>();
+        _validator.Validate(Arg.Any<InsertionContext>()).Returns(new FluentValidation.Results.ValidationResult());
+        _train.InsertCarriage(carriage1, 0);
+        _train.InsertCarriage(carriage2, 1);
+        _train.InsertCarriage(carriage3, 2);
+
+
+        var insertResult = _train.InsertCarriage(newCarriage, 1);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(insertResult.IsT0);
+            Assert.That(_train.Count, Is.EqualTo(4));
+        });
+        Assert.Multiple(() =>
+        {
+            var carriagesResult = _train.GetFromIdxInclusive(0);
+            Assert.That(carriagesResult.IsT0);
+            var carriages = carriagesResult.AsT0;
+            Assert.That(carriages, Has.Count.EqualTo(4));
+            Assert.That(carriages[0], Is.EqualTo(carriage1));
+            Assert.That(carriages[1], Is.EqualTo(newCarriage));
+            Assert.That(carriages[2], Is.EqualTo(carriage2));
+            Assert.That(carriages[3], Is.EqualTo(carriage3));
         });
     }
 }
