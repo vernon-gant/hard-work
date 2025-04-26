@@ -150,4 +150,19 @@ public class ListTrainTests
             Assert.That(_train.Count, Is.EqualTo(0));
         });
     }
+
+    [Test]
+    public void GivenEmptyTrain_WhenGettingFromAnyIndex_ShouldReturnIdxOutOfRange()
+    {
+        var resultNegative = _train.GetFromIdxInclusive(-1);
+        var resultZero = _train.GetFromIdxInclusive(0);
+        var resultPositive = _train.GetFromIdxInclusive(1);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(resultNegative.IsT1);
+            Assert.That(resultZero.IsT1);
+            Assert.That(resultPositive.IsT1);
+        });
+    }
 }

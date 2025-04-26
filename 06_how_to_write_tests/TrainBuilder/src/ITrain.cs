@@ -25,7 +25,7 @@ public interface ITrain
     int Count { get; }
 
     // Precondition: train is not full
-    OneOf<string, EmptyTrain> Print { get; }
+    OneOf<string, EmptyTrain> Printing { get; }
 
     #endregion
 }
