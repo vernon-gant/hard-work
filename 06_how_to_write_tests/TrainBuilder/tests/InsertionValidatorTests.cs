@@ -32,6 +32,17 @@ public class InsertionValidatorTests
     }
 
     [Test]
+    public void WhenInsertionIdxIsOutOfRange_MustReturnFalse()
+    {
+        _train.Count.Returns(DefaultTrainSize);
+        var context = new InsertionContext(_train, DefaultTrainSize, _carriage);
+
+        var result = _validator.Validate(context);
+
+        AssertValidationFailed(result);
+    }
+
+    [Test]
     public void WhenTrainIsFull_MustReturnFalse()
     {
         _train.Count.Returns(MaxTrainSize);
