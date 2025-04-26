@@ -1,4 +1,4 @@
-﻿namespace TrainBuilder;
+﻿namespace TrainBuilder.tests;
 
 public class InsertionValidatorTests
 {
