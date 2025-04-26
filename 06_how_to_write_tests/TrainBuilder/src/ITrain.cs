@@ -7,7 +7,7 @@ public interface ITrain
 {
     OneOf<Success, Error<string>> InsertCarriage(BaseCarriage baseCarriage, int idx);
 
-    OneOf<List<BaseCarriage>, CarriageOutOfRange> GetAfterIdx(int idx);
+    OneOf<List<ICarriage>, IdxOutOfRange> GetAfterIdx(int idx);
 
     int Count { get; }
 
@@ -16,4 +16,4 @@ public interface ITrain
 
 public struct EmptyTrain;
 
-public struct CarriageOutOfRange;
+public struct IdxOutOfRange;
