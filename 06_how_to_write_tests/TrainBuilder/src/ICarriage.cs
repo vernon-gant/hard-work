@@ -6,6 +6,8 @@
 /// </summary>
 public interface ICarriage
 {
+    // Queries
+
     int Capacity { get; }
 
     char Marker { get; }
