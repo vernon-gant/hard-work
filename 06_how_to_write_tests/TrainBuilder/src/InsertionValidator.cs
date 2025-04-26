@@ -8,9 +8,9 @@ public class InsertionValidator : AbstractValidator<InsertionContext>
 
     public InsertionValidator()
     {
-        RuleFor(x => x).Must(HaveIndexBetweenZeroAndCurrentTrainCount).WithMessage("Idx must be greater than or equal to 0");
+        RuleFor(x => x).Must(HaveIndexBetweenZeroAndCurrentTrainCount).WithMessage("Position not possible!");
 
-        RuleFor(x => x.Train).Must(BeNotFull).WithMessage("Train is full. Insertion is not possible");
+        RuleFor(x => x.Train).Must(BeNotFull).WithMessage("Train too long!");
     }
 
     private static bool HaveIndexBetweenZeroAndCurrentTrainCount(InsertionContext context) => context.Idx >= 0 && context.Idx < context.Train.Count;
