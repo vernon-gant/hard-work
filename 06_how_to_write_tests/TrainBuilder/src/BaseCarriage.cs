@@ -1,6 +1,6 @@
 ﻿namespace TrainBuilder;
 
-public abstract class BaseCarriage
+public abstract class BaseCarriage : ICarriage
 {
     protected BaseCarriage(int capacity)
     {
@@ -9,7 +9,7 @@ public abstract class BaseCarriage
         Capacity = capacity;
     }
 
-    protected int Capacity { get; init; }
+    public int Capacity { get; }
 
-    public abstract char Marker();
+    public abstract char Marker { get; }
 }
