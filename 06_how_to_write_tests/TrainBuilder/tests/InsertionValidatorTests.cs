@@ -43,6 +43,17 @@ public class InsertionValidatorTests
     }
 
     [Test]
+    public void WhenInsertionIdxIsValid_MustReturnTrue()
+    {
+        _train.Count.Returns(DefaultTrainSize);
+        var context = new InsertionContext(_train, DefaultTrainSize - 2, _carriage);
+
+        var result = _validator.Validate(context);
+
+        Assert.That(result.IsValid);
+    }
+
+    [Test]
     public void WhenTrainIsFull_MustReturnFalse()
     {
         _train.Count.Returns(MaxTrainSize);
