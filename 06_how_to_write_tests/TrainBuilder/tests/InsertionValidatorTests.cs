@@ -9,6 +9,7 @@ public class InsertionValidatorTests
     private ICarriage _carriage;
 
     private const int DefaultTrainSize = 5;
+    private const int MaxTrainSize = 10;
 
     [OneTimeSetUp]
     public void Setup()
@@ -23,6 +24,21 @@ public class InsertionValidatorTests
     {
         _train.Count.Returns(DefaultTrainSize);
         var context = new InsertionContext(_train, -1, _carriage);
+
+        var result = _validator.Validate(context);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsValid, Is.False);
+            Assert.That(result.Errors, Has.Count.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public void WhenTrainIsFull_MustReturnFalse()
+    {
+        _train.Count.Returns(MaxTrainSize);
+        var context = new InsertionContext(_train, 0, _carriage);
 
         var result = _validator.Validate(context);
 
