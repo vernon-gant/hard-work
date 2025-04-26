@@ -70,13 +70,27 @@ public class InsertionValidatorTests
     {
         _train.Count.Returns(DefaultTrainSize);
         const int insertionIdx = 0;
-        _train.GetFromIdxInclusive(insertionIdx).Returns(OneOf<List<ICarriage>, IdxOutOfRange>.FromT0([new DinnerCarriage(20), new DinnerCarriage(20)]));
-        _carriage = new SleeperCarriage(20);
+        _train.GetFromIdxInclusive(insertionIdx).Returns(OneOf<List<ICarriage>, IdxOutOfRange>.FromT0([new DinnerCarriage(), new DinnerCarriage()]));
+        _carriage = new SleeperCarriage();
         var context = new InsertionContext(_train, insertionIdx, _carriage);
 
         var result = _validator.Validate(context);
 
         AssertValidationFailed(result);
+    }
+
+    [Test]
+    public void WhenSleeperRuleIsSatisfied_MustReturnTrue()
+    {
+        _train.Count.Returns(DefaultTrainSize);
+        const int insertionIdx = 2;
+        _train.GetFromIdxInclusive(insertionIdx).Returns(OneOf<List<ICarriage>, IdxOutOfRange>.FromT0([new PassengerCarriage(), new PassengerCarriage(), new PassengerCarriage()]));
+        _carriage = new SleeperCarriage();
+        var context = new InsertionContext(_train, insertionIdx, _carriage);
+
+        var result = _validator.Validate(context);
+
+        Assert.That(result.IsValid);
     }
 
     private static void AssertValidationFailed(ValidationResult result)
