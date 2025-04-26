@@ -7,7 +7,7 @@ public interface ITrain
 {
     OneOf<Success, Error<string>> InsertCarriage(BaseCarriage baseCarriage, int idx);
 
-    OneOf<List<ICarriage>, IdxOutOfRange> GetAfterIdx(int idx);
+    OneOf<List<ICarriage>, IdxOutOfRange> GetFromIdxInclusive(int idx);
 
     int Count { get; }
 

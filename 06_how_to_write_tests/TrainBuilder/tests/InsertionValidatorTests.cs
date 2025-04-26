@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Results;
 using NSubstitute;
+using OneOf;
 
 namespace TrainBuilder.tests;
 
@@ -58,6 +59,20 @@ public class InsertionValidatorTests
     {
         _train.Count.Returns(MaxTrainSize);
         var context = new InsertionContext(_train, 0, _carriage);
+
+        var result = _validator.Validate(context);
+
+        AssertValidationFailed(result);
+    }
+
+    [Test]
+    public void WhenSleeperRuleIsViolated_MustReturnFalse()
+    {
+        _train.Count.Returns(DefaultTrainSize);
+        const int insertionIdx = 0;
+        _train.GetFromIdxInclusive(insertionIdx).Returns(OneOf<List<ICarriage>, IdxOutOfRange>.FromT0([new DinnerCarriage(20), new DinnerCarriage(20)]));
+        _carriage = new SleeperCarriage(20);
+        var context = new InsertionContext(_train, insertionIdx, _carriage);
 
         var result = _validator.Validate(context);
 
