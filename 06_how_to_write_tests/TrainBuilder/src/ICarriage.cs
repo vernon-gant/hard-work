@@ -6,9 +6,11 @@
 /// </summary>
 public interface ICarriage
 {
-    // Queries
+    #region Queries
 
     int Capacity { get; }
 
     char Marker { get; }
+
+    #endregion
 }

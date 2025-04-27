@@ -53,3 +53,62 @@ feat: inserting into empty train adds single carriage
 Finally, this leads us to a balanced and pretty commit history.
 
 // 4
+
+## Train builder
+
+This was my university project in the first year from the procedural programming course.  
+Small enough but suits our purpose. Here are the requirements:
+
+```
+Console tool that lets the user build a small train carriage-by-carriage, list its make-up, and print simple statistics.
+
+- Train consists of carriages. More precisely, it is an ordered sequence of at most ten carriages. Ordering starts with 0 and goes up to train.Count - 1 and is called "index". Train consists of max 10 carriages.
+- A carriage has two attributes:
+    - type which also produces a one letter identifier for printing.
+        - Passenger - P
+        - Sleeper - S
+        - Diner - D
+    - capacity – an integer from 20 to 130.
+- Carriage is added to the train by the user. When we insert a new carriage into the train, we also provide an index for the carriage to be inserted at. Starting from the index (including the index itself), we move all carriages to the right. For example:
+
+Train has 5 carriages inside:
+
+[D,D,P,P,P]
+ 0,1,2,3,4
+
+We insert a new sleeper carriage at index 3. So we move 3 and 4 carriages to the right.
+
+[D,D,P,S,P,P]
+ 0,1,2,3,4,5
+
+- If we insert at the 0th index, then we move all carriages to the right. We can also append to the end of the train by entering the train.Count index.
+```
+
+As said above, the design phase remains as it is.  
+The design is quite simple here :)  
+We manipulate with a [Train](https://github.com/vernon-gant/hard-work/blob/master/06_how_to_write_tests/TrainBuilder/src/ITrain.cs)  
+and insert [carriages](https://github.com/vernon-gant/hard-work/blob/master/06_how_to_write_tests/TrainBuilder/src/ICarriage.cs) into it.  
+So these are our ADTs, and we can also extract the insertion validation into a separate ADT with the help of FluentValidation and represent the insertion rules in code.  
+That's basically it.
+
+I started with implementing validation rules for insertion.  
+I just defined my expectations in this BDD form proposed by ChatGPT — which I really liked — and started writing tests that failed, and then covering them with a green commit that passed the single test.  
+I decided not to expand a test commit to multiple tests (even to 2) to keep it really simple and make micro commits.  
+As said, for the [first commit (this is a squashed version with test and implementation)](https://github.com/vernon-gant/hard-work/commit/8d4158a70f8f5189043de51f2753e2a01db3505a) I simply added a test for not allowing negative indexes  
+and then a rule for that in the validator.  
+The key is that I did not hold in my head all subsequent rules such as that the insertion index must also be less or equal to the current train size.  
+The next change, for example, was the [check if the train is full](https://github.com/vernon-gant/hard-work/commit/28ea2dcaf1dfbc05f41a43dd70fd392a31551866), where I simply added a new rule.  
+[Later](https://github.com/vernon-gant/hard-work/commit/f42cd1833e241faddacc7d9e64093abe1da72e4a) I refactored the rule from the first commit and added a constraint for the max possible insertion index.  
+So gradually I built my validator, and at the end, it covered all the requirements.  
+Sometimes, after writing a test from my spec description, I figured out that the test was already green, so there was no need to implement anything, and I committed a green test right away.  
+Train implementation followed the same approach.
+
+In this case, the project was small and more an educative one, so I could really commit a few lines of code without any problems.  
+I will try to do this at my job later, but I anticipate that it is realistic to follow this idea because I really like it :)  
+A few times, I made a rollback to the test commit after implementing validation rules incorrectly.  
+Code disappeared, but it was not that much — 5 or 10 lines is nothing.  
+Could I commit less than a few lines of code? Probably not :)  
+But I guess because the complexity of this project was not that high, and I could come up with good specs, I could do it pretty well.  
+I think the only difference in real projects will be time — probably it will take just a bit more time to come up with tests,  
+but I am pretty sure that I will be able to remain on this micro commit layer.
+
