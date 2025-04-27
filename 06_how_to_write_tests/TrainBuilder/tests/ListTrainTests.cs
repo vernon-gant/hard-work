@@ -151,33 +151,23 @@ public class ListTrainTests
         });
     }
 
-    [Test]
-    public void GivenEmptyTrain_WhenGettingFromAnyIndex_ShouldReturnIdxOutOfRange()
+    [TestCase(-1)]
+    [TestCase(5)]
+    [TestCase(10)]
+    public void GivenEmptyTrain_WhenGettingFromAnyIndex_ShouldReturnIdxOutOfRange(int idx)
     {
-        var resultNegative = _train.GetFromIdxInclusive(-1);
-        var resultZero = _train.GetFromIdxInclusive(0);
-        var resultPositive = _train.GetFromIdxInclusive(1);
+        var result = _train.GetFromIdxInclusive(idx);
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(resultNegative.IsT1);
-            Assert.That(resultZero.IsT1);
-            Assert.That(resultPositive.IsT1);
-        });
+        Assert.That(result.IsT1);
     }
 
-    [Test]
-    public void GivenNonEmptyTrain_WhenGettingFromNegativeIndex_ShouldReturnIdxOutOfRange()
+    [TestCase(-1)]
+    [TestCase(-5)]
+    [TestCase(-10)]
+    public void GivenNonEmptyTrain_WhenGettingFromNegativeIndex_ShouldReturnIdxOutOfRange(int idx)
     {
-        var carriage = Substitute.For<ICarriage>();
-        _validator.Validate(Arg.Any<InsertionContext>()).Returns(new FluentValidation.Results.ValidationResult());
-        _train.InsertCarriage(carriage, 0);
+        var result = _train.GetFromIdxInclusive(idx);
 
-        var result = _train.GetFromIdxInclusive(-1);
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(result.IsT1);
-        });
+        Assert.That(result.IsT1);
     }
 }
