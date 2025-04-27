@@ -186,4 +186,25 @@ public class ListTrainTests
 
         Assert.That(result.IsT1, $"Expected IdxOutOfRange for idx={idx}");
     }
+
+    [Test]
+    public void GivenTrainWithMultipleCarriages_WhenGettingFromIndex0_ShouldReturnAllCarriages()
+    {
+        var carriage1 = new PassengerCarriage();
+        var carriage2 = new PassengerCarriage();
+        _validator.Validate(Arg.Any<InsertionContext>()).Returns(new FluentValidation.Results.ValidationResult());
+        _train.InsertCarriage(carriage1, 0);
+        _train.InsertCarriage(carriage2, 1);
+
+        var result = _train.GetFromIdxInclusive(0);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsT0);
+            var carriages = result.AsT0;
+            Assert.That(carriages, Has.Count.EqualTo(2));
+            Assert.That(carriages[0], Is.EqualTo(carriage1));
+            Assert.That(carriages[1], Is.EqualTo(carriage2));
+        });
+    }
 }
