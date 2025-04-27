@@ -207,4 +207,33 @@ public class ListTrainTests
             Assert.That(carriages[1], Is.EqualTo(carriage2));
         });
     }
+
+    [Test]
+    public void GivenTrainWithMultipleCarriages_WhenGettingFromMiddleIndex_ShouldReturnCarriagesFromThatIndex()
+    {
+        var carriage1 = Substitute.For<ICarriage>();
+        var carriage2 = Substitute.For<ICarriage>();
+        var carriage3 = Substitute.For<ICarriage>();
+        var carriage4 = Substitute.For<ICarriage>();
+        var carriage5 = Substitute.For<ICarriage>();
+        _validator.Validate(Arg.Any<InsertionContext>()).Returns(new FluentValidation.Results.ValidationResult());
+        _train.InsertCarriage(carriage1, 0);
+        _train.InsertCarriage(carriage2, 1);
+        _train.InsertCarriage(carriage3, 2);
+        _train.InsertCarriage(carriage4, 3);
+        _train.InsertCarriage(carriage5, 4);
+
+        var result = _train.GetFromIdxInclusive(2);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsT0);
+            var carriages = result.AsT0;
+            Assert.That(carriages, Has.Count.EqualTo(3));
+            Assert.That(carriages[0], Is.EqualTo(carriage3));
+            Assert.That(carriages[1], Is.EqualTo(carriage4));
+            Assert.That(carriages[2], Is.EqualTo(carriage5));
+        });
+    }
+
 }
