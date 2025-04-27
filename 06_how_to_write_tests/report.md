@@ -114,7 +114,7 @@ but I am pretty sure that I will be able to remain on this micro commit layer.
 
 ## Encode decode
 
-I was also interested if this approach is applicable to algorithmic tasks like those from leet code. But not for one function tasks but say at least with 2 methods. So I chose this task
+I was also interested in whether this approach is applicable to algorithmic tasks, like those from LeetCode. But not for one-function tasks — rather, at least tasks with two methods. So I chose this task:
 
 ```
 Given an array of strings s[], you are required to create an algorithm in the encode() function that can convert the given strings into a single encoded string, which can be transmitted over the network and then decoded back into the original array of strings. The decoding will happen in the decode() function.
@@ -139,9 +139,12 @@ Constraints:
 s[i] contains any possible characters out of the 256 ASCII characters.
 ```
 
-And started implementing it using different test cases. For example I started with the [empty list](https://github.com/vernon-gant/hard-work/commit/03a2b98ec83454d4399538e2dc2e8aca1da24c66) followed by a list
-[with an empty string](https://github.com/vernon-gant/hard-work/commit/d082096da75c584cdf0ea9f507187f00ff234e36). Yes this improved my understanding of the problem because already on the second commit I had to figure out how to differentiate between an empty list and a list with an empty string and the same default implementation did not work. Then I added first list wit multiple words
-and implemented the [algorithm](https://github.com/vernon-gant/hard-work/commit/d082096da75c584cdf0ea9f507187f00ff234e36). However after that my implementation did not change at all and I just added more tests for special characters
+I started implementing it using different test cases.
+For example, I started with the [empty list](https://github.com/vernon-gant/hard-work/commit/03a2b98ec83454d4399538e2dc2e8aca1da24c66), followed by a list [with an empty string](https://github.com/vernon-gant/hard-work/commit/d082096da75c584cdf0ea9f507187f00ff234e36).
+Yes, this improved my understanding of the problem because already on the second commit I had to figure out how to differentiate between an empty list and a list with an empty string, and the same default implementation did not work.
+Then I added the first list with multiple words and implemented the [algorithm](https://github.com/vernon-gant/hard-work/commit/d082096da75c584cdf0ea9f507187f00ff234e36).
+
+However, after that, my implementation did not change at all and I just added more tests for special characters:
 
 ```c#
 yield return new TestCaseData(new List<string> { "\u0001\u0002\u0003", "\u0004\u0005" });
@@ -152,4 +155,6 @@ yield return new TestCaseData(new List<string> { "!@#$%", "^&*()", "_;:'\"", "|\
 yield return new TestCaseData(new List<string> { "hello!@#", "world%^&", "test_|:" });
 ```
 
-I would not state that this approach is the best one for pure algorithmic tasks and not logic or some domain related tasks. Nothing to say about one function tasks like sliding window or dynamic programming tasks.
+I would not say that this approach is the best for pure algorithmic tasks — especially not for logic-heavy or domain-related tasks.
+Nothing to say about one-function tasks like sliding window or dynamic programming challenges either.
+There was also a big jump between the mock implementation and the correct algorithm, and I could not split these changes into smaller ones without breaking the logic. Lesson learned anyway!
