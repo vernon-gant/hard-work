@@ -2,14 +2,17 @@
 
 public class SolutionTests
 {
-    [SetUp]
-    public void Setup()
+    [TestCaseSource(nameof(TestData))]
+    public void EncodeDecode_ShouldReturnOriginalList(List<string> input)
     {
+        var encoded = Solution.Encode(input);
+        var decoded = Solution.Decode(encoded);
+
+        Assert.That(decoded, Is.EqualTo(input));
     }
 
-    [Test]
-    public void Test1()
+    private static IEnumerable<TestCaseData> TestData()
     {
-        Assert.Pass();
+        yield return new TestCaseData(new List<string>());
     }
 }
