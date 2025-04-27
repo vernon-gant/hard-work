@@ -112,3 +112,44 @@ But I guess because the complexity of this project was not that high, and I coul
 I think the only difference in real projects will be time — probably it will take just a bit more time to come up with tests,  
 but I am pretty sure that I will be able to remain on this micro commit layer.
 
+## Encode decode
+
+I was also interested if this approach is applicable to algorithmic tasks like those from leet code. But not for one function tasks but say at least with 2 methods. So I chose this task
+
+```
+Given an array of strings s[], you are required to create an algorithm in the encode() function that can convert the given strings into a single encoded string, which can be transmitted over the network and then decoded back into the original array of strings. The decoding will happen in the decode() function.
+
+You need to implement two functions:
+1. encode(): This takes an array of strings s[] and encodes it into a single string.
+2. decode(): This takes the encoded string as input and returns an array of strings containing the original array as given in the encode method.
+
+Note: You are not allowed to use any inbuilt serialize method.
+
+Input: s = ["Hello","World"]
+Output: ["Hello","World"]
+Explanation: The encode() function will have the str as input, it will be encoded by one machine. Then another machine will receive the encoded string as the input parameter and then will decode it to its original form.
+
+Input: s = ["abc","!@"]
+Output: ["abc","!@"]
+Explanation: The encode() function will have the str as input, here there are two strings, one is "abc" and the other one has some special characters. It will be encoded by one machine. Then another machine will receive the encoded string as the input parameter and then will decode it to its original form.
+
+Constraints:
+1<=s.size()<=100
+1<=s[i].size()<=100
+s[i] contains any possible characters out of the 256 ASCII characters.
+```
+
+And started implementing it using different test cases. For example I started with the [empty list](https://github.com/vernon-gant/hard-work/commit/03a2b98ec83454d4399538e2dc2e8aca1da24c66) followed by a list
+[with an empty string](https://github.com/vernon-gant/hard-work/commit/d082096da75c584cdf0ea9f507187f00ff234e36). Yes this improved my understanding of the problem because already on the second commit I had to figure out how to differentiate between an empty list and a list with an empty string and the same default implementation did not work. Then I added first list wit multiple words
+and implemented the [algorithm](https://github.com/vernon-gant/hard-work/commit/d082096da75c584cdf0ea9f507187f00ff234e36). However after that my implementation did not change at all and I just added more tests for special characters
+
+```c#
+yield return new TestCaseData(new List<string> { "\u0001\u0002\u0003", "\u0004\u0005" });
+yield return new TestCaseData(new List<string> { "áéíóú", "ßçü" });
+yield return new TestCaseData(new List<string> { "!@#$%^&*()", "<>[]{}" });
+yield return new TestCaseData(new List<string> { "!@#$%^&*()_;:'\"|\\]|\\||-" });
+yield return new TestCaseData(new List<string> { "!@#$%", "^&*()", "_;:'\"", "|\\]|\\||-" });
+yield return new TestCaseData(new List<string> { "hello!@#", "world%^&", "test_|:" });
+```
+
+I would not state that this approach is the best one for pure algorithmic tasks and not logic or some domain related tasks. Nothing to say about one function tasks like sliding window or dynamic programming tasks.
