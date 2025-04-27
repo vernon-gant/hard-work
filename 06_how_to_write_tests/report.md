@@ -52,7 +52,7 @@ feat: inserting into empty train adds single carriage
 
 Finally, this leads us to a balanced and pretty commit history.
 
-// 4
+![4](https://github.com/user-attachments/assets/e87237c1-a0f8-42a7-aadc-4cb83199d0df)
 
 ## Train builder
 
