@@ -1,4 +1,6 @@
-﻿namespace EncodeDecode;
+﻿using System.Text;
+
+namespace EncodeDecode;
 
 public class Solution
 {
@@ -7,27 +9,34 @@ public class Solution
         if (strings.Count == 0)
             return string.Empty;
 
-        if (strings.Count == 1)
+        var builder = new StringBuilder();
+        foreach (var word in strings)
         {
-            var word = strings[0];
-            return word.Length.ToString("D3") + word;
+            builder.Append(word.Length);
+            builder.Append(':');
+            builder.Append(word);
         }
 
-        return string.Empty;
+        return builder.ToString();
     }
 
     public static List<String> Decode(string str)
     {
-        if (string.IsNullOrEmpty(str))
-            return new List<string>();
+        var decodedStrings = new List<string>();
+        int idx = 0;
 
-        if (str.Length >= 3)
+        while (idx < str.Length)
         {
-            int length = int.Parse(str[..3]);
-            string word = str.Substring(3, length);
-            return [word];
+            int colonIdx = str.IndexOf(':', idx);
+            int length = int.Parse(str.Substring(idx, colonIdx - idx));
+
+            int wordStart = colonIdx + 1;
+            string word = str.Substring(wordStart, length);
+            decodedStrings.Add(word);
+
+            idx = wordStart + length;
         }
 
-        return [];
+        return decodedStrings;
     }
 }

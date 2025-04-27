@@ -15,6 +15,7 @@ public class SolutionTests
     {
         yield return new TestCaseData(new List<string>());
         yield return new TestCaseData(new List<string> { "" });
-        yield return new TestCaseData(new List<string> { "hello" });
+        yield return new TestCaseData(new List<string> { "test" });
+        yield return new TestCaseData(new List<string> { "hello", "my", "friend", "!" });
     }
 }
