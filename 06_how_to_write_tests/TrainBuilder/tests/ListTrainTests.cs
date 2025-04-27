@@ -170,4 +170,20 @@ public class ListTrainTests
 
         Assert.That(result.IsT1);
     }
+
+    [TestCase(4)]
+    [TestCase(10)]
+    [TestCase(100)]
+    public void GivenNonEmptyTrain_WhenGettingFromIndexGreaterOrEqualCount_ShouldReturnIdxOutOfRange(int idx)
+    {
+        _validator.Validate(Arg.Any<InsertionContext>()).Returns(new FluentValidation.Results.ValidationResult());
+        _train.InsertCarriage(new PassengerCarriage(), 0);
+        _train.InsertCarriage(new PassengerCarriage(), 0);
+        _train.InsertCarriage(new PassengerCarriage(), 0);
+        _train.InsertCarriage(new PassengerCarriage(), 0);
+
+        var result = _train.GetFromIdxInclusive(idx);
+
+        Assert.That(result.IsT1, $"Expected IdxOutOfRange for idx={idx}");
+    }
 }
