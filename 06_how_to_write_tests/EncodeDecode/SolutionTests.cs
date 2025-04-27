@@ -14,5 +14,6 @@ public class SolutionTests
     private static IEnumerable<TestCaseData> TestData()
     {
         yield return new TestCaseData(new List<string>());
+        yield return new TestCaseData(new List<string> { "" });
     }
 }
