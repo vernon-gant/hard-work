@@ -22,5 +22,6 @@ public class SolutionTests
             "leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode leetcode",
             "is cool is cool is cool is cool is cool is cool is cool is cool is cool", "is cool is cool is cool is cool is coolis cool"
         });
+        yield return new TestCaseData(new List<string> { "54he36llo", "6my3453", "6fr436ie3436nd6" });
     }
 }
