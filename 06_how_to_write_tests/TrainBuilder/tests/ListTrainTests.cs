@@ -236,4 +236,21 @@ public class ListTrainTests
         });
     }
 
+    [Test]
+    public void GivenTrainWithSingleCarriage_WhenGettingFromIndex0_ShouldReturnSingleCarriage()
+    {
+        var carriage = Substitute.For<ICarriage>();
+        _validator.Validate(Arg.Any<InsertionContext>()).Returns(new FluentValidation.Results.ValidationResult());
+        _train.InsertCarriage(carriage, 0);
+
+        var result = _train.GetFromIdxInclusive(0);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsT0);
+            var carriages = result.AsT0;
+            Assert.That(carriages, Has.Count.EqualTo(1));
+            Assert.That(carriages[0], Is.EqualTo(carriage));
+        });
+    }
 }
