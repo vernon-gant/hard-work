@@ -1,0 +1,13 @@
+﻿{
+    "$schema": "http://json.schemastore.org/launchsettings.json",
+    "profiles": {
+        "Seed entities": {
+            "commandName": "Project",
+            "commandLineArgs": "-e 1 2 3 4 5 6 -v 500 -d 500 -c \"Server=localhost,1433;Database=motor-pool-dev;User Id=sa;Password=SuperSecret123321!;Encrypt=Yes;TrustServerCertificate=Yes;Trusted_Connection=False;\""
+        },
+        "Initial seed": {
+            "commandName": "Project",
+            "commandLineArgs": "-i -c \"Server=localhost,1433;Database=motor-pool-dev;User Id=sa;Password=SuperSecret123321!;Encrypt=Yes;TrustServerCertificate=Yes;Trusted_Connection=False;\""
+        }
+    }
+}

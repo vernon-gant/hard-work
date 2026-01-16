@@ -1,0 +1,27 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="h-100 d-flex align-items-center">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4 justify-content-center">
+            @foreach (KeyValuePair<string, string> reportTypePage in Model.TYPE_PAGE_MAP)
+            {
+                <div class="col d-flex align-items-stretch">
+                    <div class="card h-100 shadow-lg bg-white rounded-4 border-1 report-card d-flex flex-column justify-content-center">
+                        <div class="card-body text-center m-2">
+                            <h2 class="card-title report-title">
+                                <a class="report-link" asp-page="@reportTypePage.Value">@Html.DisplayFor(_ => reportTypePage.Key)</a>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,26 @@
+﻿{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "downlevelIteration": true,
+        "outDir": "./dist",
+        "sourceMap": true,
+        "declaration": false,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "ES2022",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "importHelpers": true,
+        "allowJs": true,
+        "lib": ["es2020", "dom"],
+        "types": ["node", "jest"],
+        "typeRoots": ["node_modules/@types", "typings.d.ts"],
+        "useDefineForClassFields": false
+    },
+    "include": ["**/*.ts", "**/*.d.ts"],
+}

@@ -1,0 +1,5 @@
+From pros I can say that I added constructor with an initial capacity parameter and a clear method so that we do not need to create a new object when we just want to clear the array and continue to work with it.
+
+However the insertion part could be better. The approach with put which replaces value at index i with given value is so obvious and efficient that of course I oversaw it and added instead just two method AddFront and AddBack. 
+Although my intent was to make everything as atomic as possible, the functionality of my ADT was quite limited. With put, put_left and put_right we make interaction with our ADT more comfortable. 
+We can express using them my AddFront and AddBack. Lesson learned!

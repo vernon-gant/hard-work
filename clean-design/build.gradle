@@ -1,0 +1,21 @@
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    if (project.path != ':OneOf:lib') {
+        dependencies {
+            implementation project(':OneOf:lib')
+        }
+    }
+}

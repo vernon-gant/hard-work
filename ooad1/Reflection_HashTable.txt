@@ -1,0 +1,1 @@
+All good. Also added a query for checking if hash table is full. Maybe not required but is a nice to have when working with a hash table with limited size.

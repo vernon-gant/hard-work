@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>MotorPool.Services.Vehicles</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+            <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="12.0.1"/>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MotorPool.Domain\MotorPool.Domain.csproj"/>
+        <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Manager\MotorPool.Services.Manager.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj"/>
+        <ProjectReference Include="..\MotorPool.Utils\MotorPool.Utils.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Services\Concrete\"/>
+    </ItemGroup>
+
+</Project>

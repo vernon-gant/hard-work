@@ -1,0 +1,2 @@
+Forgot to add constructors for both implementations, what is actually essential, because inside we initialize all needed variables like _header, _tail and so on.
+Although they are implicitly initialized through properties assignment, it is still a good idea to have an implicit constructor.

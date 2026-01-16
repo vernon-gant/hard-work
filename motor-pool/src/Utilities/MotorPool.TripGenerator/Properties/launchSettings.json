@@ -1,0 +1,13 @@
+﻿{
+    "$schema": "http://json.schemastore.org/launchsettings.json",
+    "profiles": {
+        "Generate single trip": {
+            "commandName": "Project",
+            "commandLineArgs": "--isSingleTrip true --start 54.632517,39.695778 --end 51.658044,39.210294 --vehicleId 1 --startTime 2024-10-10T18:11:12 -c \"Server=localhost,1433;Database=motor-pool-dev;User Id=sa;Password=SuperSecret123321!;Encrypt=Yes;TrustServerCertificate=Yes;Trusted_Connection=False;\""
+        },
+        "Generate random trips": {
+            "commandName": "Project",
+            "commandLineArgs": "--vehicleSampleSize 20 --routesPerVehicle 5 -c \"Server=localhost,1433;Database=motor-pool-dev;User Id=sa;Password=SuperSecret123321!;Encrypt=Yes;TrustServerCertificate=Yes;Trusted_Connection=False;\""
+        }
+    }
+}

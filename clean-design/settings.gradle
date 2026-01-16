@@ -1,0 +1,9 @@
+rootProject.name = 'clean-design'
+
+include '1. DecouplingInterfaces:app', '1. DecouplingInterfaces:tests'
+include '2. WorkingCodeStillHasBugs:app', '2. WorkingCodeStillHasBugs:tests'
+include '3. AsyncAndMultithreading:app'
+include '4. CodeLooksEasyBut:app'
+include '5. ChoarTriples:app'
+include '6. CodeKnowsAboutOtherCode:app'
+include 'OneOf:lib'

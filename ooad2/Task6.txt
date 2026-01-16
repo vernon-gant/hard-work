@@ -1,0 +1,15 @@
+Sometimes it can be really useful to make relationships between modules public. I can imagine a situation when we want to develop a logger using the existing
+Serilog core modules. Maybe we want to rely and use core logging modules and some existing formatting features. Then we can extend some of the loggers
+and use other existing modules, why not? Must not be a library, maybe we just want to make a module public so that other developers can extend it and provide
+additional functionality.
+
+The most basic which principles or metrics for modules organization are of course cohesion and coupling. A module is considere to be cohesive when the functionalities and services
+it provides are closely related to each other and pertain to a single responsibility. And coupling means the degree of dependency between different modules. Tightly coupled systems
+are harder to maintain, that't why we try to depend on interfaces and lose the coupling. This is desirable because changes in one module do not really affect other modules. Maybe we can
+also consider general size of a module as a good metric. If we have a giant module which does everything then probably we need to decompose it further. This also underlines that
+interfaces of modules must be minimal and clear providing only neccessary functionalities and do not expose internal details.
+
+Currently I am developing an import functionality in one of our services. I should say that I more less managed to make modules cohesive and depend on interfaces. Maybe I could further
+decompose higher layer and instead of having one big class for the whole import coordination, come up with something else, but in general interfaces were cohesive, up to 5 methods. After I
+added more that 20 classes I realized how quickly things can get messy if you do not really encapsulate information in types. Although it is another topic as we talk about modules, just 
+wanted to mention :)

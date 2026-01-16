@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MotorPool.Services.Manager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Motor pool</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <script src="https://kit.fontawesome.com/55006738dc.js" crossorigin="anonymous"></script>
+    @await RenderSectionAsync("Styles", false)
+    @await RenderSectionAsync("HeadScripts", false)
+</head>
+<body class="d-flex flex-column">
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-page="/Index">Motor pool</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    @if (User.IsManager())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-page="/Index">Enterprises</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-page="/Reports/Index">Reports</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-page="/Trips/Index">Trips</a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Brands/Index">Brands</a>
+                    </li>
+                </ul>
+                <partial name="_LoginPartial"/>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container-fluid flex-fill mb-3">
+    <main role="main" class="p-3 h-100">
+        @RenderBody()
+    </main>
+</div>
+
+<footer class="border-top py-2 footer d-flex flex-column justify-content-center align-items-center">
+    <p class="text-center m-0 text-muted">
+        2024 - Motor pool
+    </p>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@await RenderSectionAsync("Scripts", false)
+</body>
+</html>

@@ -1,0 +1,48 @@
+@page "{vehicleId:int}"
+@model MotorPool.UI.Pages.Vehicles.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Vehicle";
+}
+
+<div class="container py-5">
+    <h1 class="text-center text-danger">Delete Vehicle Confirmation</h1>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="card-title">Are you sure you want to delete this vehicle?</h2>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.MotorVIN)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.MotorVIN)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.Cost)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.Cost)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.ManufactureYear)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.ManufactureYear)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.ManufactureLand)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.ManufactureLand)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.Mileage)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.Mileage)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.CompanyName)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.CompanyName)</dd>
+                    </dl>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <form asp-page="./Delete" asp-route-vehicleId="@Model.VehicleViewModel.VehicleId" method="post">
+                        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                    </form>
+                    <a href="@(HttpContext.Session.GetString("VehicleIndexReturnUrl") ?? "/Vehicles")" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

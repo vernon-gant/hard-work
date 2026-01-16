@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    implementation project(':1. DecouplingInterfaces:app')
+    testImplementation(platform('org.junit:junit-bom:5.13.1'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+    testImplementation('org.mockito:mockito-core:5.+')
+    testImplementation('org.mockito:mockito-junit-jupiter:5.+')
+    testImplementation('org.assertj:assertj-core:3.27.2')
+    testImplementation('com.h2database:h2:2.2.224')
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'failed', 'skipped', 'standardOut', 'standardError'
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+}

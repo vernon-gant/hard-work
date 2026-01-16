@@ -1,0 +1,10 @@
+1) AddTail() method precondition was not 100% correct. Indeed we can just use this operation even if the list is empty, we
+will just create a list with one element
+
+2) Same applies to Find() method, we can even have an empty list and the find result will be just NOT_FOUND
+
+3) Get() method is a query and not command, precondition was right, but we just query the element, so the return type
+is not void()
+
+4) Something happened with my head, I also used void as return type for IsHead(), IsTail() and IsValue(), although it had to be
+bool result. They also do not need any preconditions(only Get()), because they will just return false on empty list.

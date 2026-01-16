@@ -1,0 +1,2 @@
+After reading the Bloom Filter description from the article I though it could make sense to make the ADT more flexible and get as input in the constructor the number of expected input elements and desired fallacy rate. In the answer I have just size as parameter for constructor. 
+If we delegate configuring the size to client then it is the right option!

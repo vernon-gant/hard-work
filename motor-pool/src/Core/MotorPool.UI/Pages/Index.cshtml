@@ -1,0 +1,50 @@
+﻿@page
+@using MotorPool.Services.Manager
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Manager panel";
+}
+
+<div class="container py-4">
+    @if (!User.IsManager())
+    {
+        <h1 class="text-center">Welcome to Motor pool</h1>
+
+        return;
+    }
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+        @foreach (var enterpriseViewModel in Model.Enterprises)
+        {
+            <div class="col mx-auto">
+                <div class="card h-100 shadow bg-white rounded-4 border-4 p-3">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">@Html.DisplayFor(_ => enterpriseViewModel.Name)</h5>
+                        <hr>
+                        <p class="card-text">@Html.DisplayNameFor(_ => enterpriseViewModel.City): <strong>@enterpriseViewModel.City</strong></p>
+                        <p class="card-text">@Html.DisplayNameFor(_ => enterpriseViewModel.Street): <strong>@enterpriseViewModel.Street</strong></p>
+                        <p class="card-text">@Html.DisplayNameFor(_ => enterpriseViewModel.VAT): <strong>@enterpriseViewModel.VAT</strong></p>
+                        <p class="card-text">@Html.DisplayNameFor(_ => enterpriseViewModel.TimeZoneId): <strong>@enterpriseViewModel.TimeZoneId</strong></p>
+                        <p class="card-text">Managed by: <strong>@enterpriseViewModel.ManagerIds.Count</strong> manager(s)</p>
+                        <p class="card-text">@Html.DisplayNameFor(_ => enterpriseViewModel.FoundedOn): <strong>@enterpriseViewModel.FoundedOn.ToShortDateString()</strong></p>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="mt-2 d-flex justify-content-around">
+                            <a asp-page="/Vehicles/Index" asp-route-enterpriseId="@enterpriseViewModel.EnterpriseId" asp-route-enterpriseName="@enterpriseViewModel.Name" class="text-decoration-none text-primary">
+                                <i class="fas fa-car fa-2x" title="Vehicles"></i>
+                            </a>
+                            <a asp-page="/Drivers/Index" asp-route-enterpriseId="@enterpriseViewModel.EnterpriseId" class="text-decoration-none text-primary">
+                                <i class="fas fa-user-tie fa-2x" title="Drivers"></i>
+                            </a>
+                            <a asp-page="/Enterprises/Details" asp-route-enterpriseId="@enterpriseViewModel.EnterpriseId" class="text-decoration-none text-primary">
+                                <i class="fas fa-info-circle fa-2x" title="Details"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

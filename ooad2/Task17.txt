@@ -1,0 +1,10 @@
+For example in the context of import functionality which I was doing not so long time ago we would try to create a class hierarchy where Import is the base class
+and various file types (XlsxImport, CsvImport, PdfImport) inherit from it, as well as different resource types (ResourceImport, CustomFieldImport),
+all part of the same hierarchy. However grouping import file types and resources types into the same hierarchy is a mistake, because they represent distinct concepts
+- how data is read from a file and how data should be parsed. So here composition is the way to go - we have a strategy for dealing with file type and another one
+for how to parse output ftom raw parsing.
+
+Another pitfall which comes to mind is authentication. We could imagine such a class hierarchy where we have a base account class and for each authentication method like
+normal email-password or google,facebook or 2fa we might want to create a new class with a method like "Authenticate" overridden. This design might even seem natural,
+however it leads to problems, because if one user wants to use several authentication methods, then we are stuck. In this case again - just have a normal account class
+with all functionalities for an account and then a list of "AuthenticationMethod" which can be called.

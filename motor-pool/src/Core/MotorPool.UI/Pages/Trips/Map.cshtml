@@ -1,0 +1,53 @@
+﻿@page
+@using MotorPool.Services.Geo.Models
+@model MapModel
+
+@{
+    ViewData["Title"] = "Trip map";
+}
+
+@section HeadScripts {
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+}
+
+@section Styles {
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet'/>
+}
+
+@section Scripts
+{
+    <script src="~/js/map.js"></script>
+}
+
+<div class="visually-hidden">
+    @foreach ((TripViewModel, List<GeoPointViewModel>) tripWithRoute in Model.TripsWithRoutes)
+    {
+        <div class="trip">
+            <span class="trip-id">@tripWithRoute.Item1.TripId</span>
+            <span class="start-point">
+                <span class="latitude">@tripWithRoute.Item1.StartPoint.Latitude</span>
+                <span class="longitude">@tripWithRoute.Item1.StartPoint.Longitude</span>
+            </span>
+            <span class="end-point">
+                <span class="latitude">@tripWithRoute.Item1.EndPoint.Latitude</span>
+                <span class="longitude">@tripWithRoute.Item1.EndPoint.Longitude</span>
+            </span>
+            <span class="start-time">@tripWithRoute.Item1.StartTime</span>
+            <span class="end-time">@tripWithRoute.Item1.EndTime</span>
+            <span class="start-point-description">@tripWithRoute.Item1.StartPointDescription</span>
+            <span class="end-point-description">@tripWithRoute.Item1.EndPointDescription</span>
+            <ul>
+                @foreach (GeoPointViewModel geoPointViewModel in tripWithRoute.Item2)
+                {
+                    <li class="route">
+                        <span class="latitude">@geoPointViewModel.Point.Latitude</span>
+                        <span class="longitude">@geoPointViewModel.Point.Longitude</span>
+                        <span class="recorded-at">@geoPointViewModel.RecordedAt</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+
+<div class="h-100 w-100 rounded-2" id='map'></div>

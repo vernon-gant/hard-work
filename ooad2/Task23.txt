@@ -1,0 +1,6 @@
+If we imagine that we have a "Document" base class with methods for saving and printing but we will take into account only "saving". Per default there are no preconditions
+for saving a document, we can save any document at any state. As a post condition let's imagine that we persist the document in the file system. However if now we introduce a new
+"ReadOnlyDocument" class then things can get messy, because we can not really save a read only document, so this method could just throw an exception. However exactly this would violate
+the LSP principle, because in that case we would strengthen the precondition from "save any document at any state" to "can not be saved at all". Possible solution would be just do nothing.
+However this also violates the LSP principle, because the contract of the base class method is not fulfilled - document is not persisted in the file system, because we did nothing.
+This class hierarchy does not work for sure, we need something else.

@@ -1,0 +1,1 @@
+Correctly did not add post and preconditions and identified Intersection, Union, Difference and IsSubset as query methods. They all return PowerSet<T> as needed.

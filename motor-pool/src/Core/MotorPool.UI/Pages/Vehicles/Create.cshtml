@@ -1,0 +1,68 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="header-with-icon mb-4">
+    <a asp-page="./Index">
+        <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
+    </a>
+    <h1 class="text-center mb-4">Add a new vehicle</h1>
+</div>
+<div class="row">
+    <div class="col-md-4 mx-auto d-flex flex-column justify-content-between px-0">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-2">
+                <label asp-for="VehicleDto.MotorVIN" class="control-label"></label>
+                <input asp-for="VehicleDto.MotorVIN" class="form-control"/>
+                <span asp-validation-for="VehicleDto.MotorVIN" class="text-danger"></span>
+            </div>
+            <div class="form-group  mb-2">
+                <label asp-for="VehicleDto.ManufactureYear" class="control-label"></label>
+                <input asp-for="VehicleDto.ManufactureYear" class="form-control"/>
+                <span asp-validation-for="VehicleDto.ManufactureYear" class="text-danger"></span>
+            </div>
+            <div class="form-group  mb-2">
+                <label asp-for="VehicleDto.ManufactureLand" class="control-label"></label>
+                <input asp-for="VehicleDto.ManufactureLand" class="form-control"/>
+                <span asp-validation-for="VehicleDto.ManufactureLand" class="text-danger"></span>
+            </div>
+            <div class="form-group  mb-2">
+                <label asp-for="VehicleDto.Cost" class="control-label"></label>
+                <input asp-for="VehicleDto.Cost" class="form-control"/>
+                <span asp-validation-for="VehicleDto.Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group  mb-2">
+                <label asp-for="VehicleDto.Mileage" class="control-label"></label>
+                <input asp-for="VehicleDto.Mileage" class="form-control"/>
+                <span asp-validation-for="VehicleDto.Mileage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleDto.VehicleBrandId" class="control-label">Brand</label>
+                <select asp-for="VehicleDto.VehicleBrandId" class="form-control"
+                        asp-items="@Model.VehicleBrandSelectList">
+                    <option value="">-- Select brand --</option>
+                </select>
+            </div>
+            <div class="form-group mt-3 row">
+                <input type="submit" value="Create" class="btn btn-primary col-md-4 mx-auto"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById("vehicleForm").addEventListener("submit", function(event) {
+    var localTimeElement = document.getElementById("purchaseTimeLocal");
+    var utcTimeElement = document.getElementById("purchaseTimeUtc");
+
+    var localTime = new Date(localTimeElement.value);
+    utcTimeElement.value = localTime.toISOString();
+
+    // Prevents the local time field from being submitted.
+    localTimeElement.name = '';
+});
+</script>

@@ -1,0 +1,132 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MotorPool.Services.Manager
+@using MotorPool.Services.Vehicles.Models
+@using MotorPool.UI.Pages.Shared
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Vehicles management";
+}
+
+<div class="header-with-icon mb-4">
+    <h1 class="text-center">
+        All
+        @if (Model.VehicleBrandSignature != null)
+        {
+            <span class="text-decoration-underline">@Model.VehicleBrandSignature</span>
+        }
+        Vehicles
+        @if (Model.EnterpriseName != null)
+        {
+            <span> in </span>
+            <span class="text-decoration-underline">@Model.EnterpriseName</span>
+        }
+    </h1>
+    <a asp-page="./Create">
+        <i class="fa-solid fa-plus icon-plus"></i>
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].ModelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].MotorVIN)
+                <input data-filter-entity="vehicle" data-filter-property="vin" type="search"/>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].ManufactureYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].ManufactureLand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].Mileage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].AcquiredOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].TotalTripsCount)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (VehicleViewModel vehicleViewModel in Model.Vehicles)
+        {
+            <tr data-entity="vehicle">
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleViewModel.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleViewModel.ModelName)
+                </td>
+                <td data-property="vin">
+                    @Html.DisplayFor(modelItem => vehicleViewModel.MotorVIN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleViewModel.ManufactureYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleViewModel.ManufactureLand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleViewModel.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleViewModel.Mileage)
+                </td>
+                <td class="enterprise-entity-date">
+                    @Html.DisplayFor(modelItem => vehicleViewModel.AcquiredOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleViewModel.TotalTripsCount)
+                </td>
+                <td class="text-nowrap">
+                    @await Html.PartialAsync("_Actions", new ActionsModel
+                    {
+                        IdRouteParameterName = "vehicleId",
+                        IdValue = vehicleViewModel.VehicleId,
+                        HasChangeAccess = User.IsManager()
+                    })
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@await Html.PartialAsync("_Paging", new PagingModel
+{
+    CurrentPage = Model.CurrentPage,
+    TotalPages = Model.TotalPages,
+    PagesDisplayRange = Model.PAGES_DISPLAY_RANGE
+})
+
+<div class="row w-100 py-3">
+    <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+        <a asp-page="/Index" class="text-decoration-none admin-back-link">
+            <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
+            <span class="fw-bold" style="position: relative; bottom: 7px;">Back to enterprises</span>
+        </a>
+        @if (RouteData.Values["vehicleBrandId"] != null)
+        {
+            <a asp-page="../Brands/Index" class="text-decoration-none admin-back-link mt-4">
+                <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
+                <span class="fw-bold" style="position: relative; bottom: 7px;">Back to vehicle brands</span>
+            </a>
+        }
+    </div>
+</div>

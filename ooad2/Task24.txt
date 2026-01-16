@@ -1,0 +1,8 @@
+For the factorization case I have an example from the import part I was doing. At the beginning I extracted something like a CustomFieldValidator, RawImportValidator and many other
+interfaces which in general had one or two methods and seemed weird to me. Altough I knew that it is a bad solution I could not come up with a better one. however later I could recognize
+a chain of responsibility here where we just have a sequence of steps and each of these classes is just a specific case of a "Handler" interface. After that they were all turned into
+a pipeline of handlers and it started more less look like something what makes sense.
+
+I remember when I just started programming we had to do smth like a small banking app. And I just started with a normal Account which is a general abstraction for everything.
+And we were not given all requirements right in the beginning. So after some time we got new requirements that we must also have a SavingsAccount, CheckingAccount, CreditAccount. Then I have to lift
+the BankAccount with all common attributes as a base class and inherit from it all other cases with additional implementations.

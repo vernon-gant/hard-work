@@ -1,0 +1,138 @@
+@page "{vehicleId:int}"
+@model MotorPool.UI.Pages.Vehicles.DetailsModel
+
+@{
+    ViewData["Title"] = "Vehicle Details";
+}
+
+@section Scripts
+{
+    <script>
+    $(document).ready(function() {
+        $('#tripForm').submit(function(event) {
+            const selectedCheckboxes = $('input[name="selectedTrips"]:checked');
+
+            if (selectedCheckboxes.length === 0) {
+                event.preventDefault();
+                $('#errorMessage').removeClass('d-none').addClass('d-block');
+                setTimeout(function() { $('#errorMessage').fadeOut('slow', function() { $(this).removeClass('d-block').addClass('d-none').css('display', ''); }); }, 3000);
+            }
+        });
+    });
+    </script>
+}
+
+<div class="container mx-auto mt-4 row">
+    <div class="col-sm-8 col-md-6 mx-auto">
+        <div class="card p-3 shadow-lg rounded-3">
+            <div class="card-header">
+                <h2 class="card-title">@Html.DisplayFor(model => model.VehicleViewModel.CompanyName) - @Html.DisplayFor(model => model.VehicleViewModel.ModelName)</h2>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.MotorVIN):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.MotorVIN)</dd>
+
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.Cost):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.Cost)</dd>
+
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.ManufactureYear):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.ManufactureYear)</dd>
+
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.ManufactureLand):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.ManufactureLand)</dd>
+
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.Mileage):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.Mileage)</dd>
+
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.CompanyName):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.CompanyName)</dd>
+
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.AcquiredOn):</dt>
+                    <dd class="col-sm-6 enterprise-entity-date">@Html.DisplayFor(model => model.VehicleViewModel.AcquiredOn)</dd>
+                </dl>
+            </div>
+
+            <section>
+                <div class="container mt-5">
+                    <h3 class="text-center mb-4">Trips</h3>
+
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-6">
+                            <form method="get">
+                                <div class="mb-3">
+                                    <label for="StartDate" class="form-label">Start Date</label>
+                                    <input required="required" type="date" class="form-control" id="StartDate" name="StartDate" asp-for="StartDate">
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="EndDate" class="form-label">End Date</label>
+                                    <input required="required" type="date" class="form-control" id="EndDate" name="EndDate" asp-for="EndDate">
+                                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Search</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        @if (Model.VehicleTrips.Any())
+                        {
+                            <form id="tripForm" asp-page="/Trips/Map" method="post" asp class="d-flex flex-column align-items-center">
+                                <div class="list-group mb-4 shadow">
+                                    @foreach (var trip in Model.VehicleTrips)
+                                    {
+                                        <label class="list-group-item list-group-item-action" aria-current="true">
+                                            <input class="form-check-input me-1" name="selectedTrips" type="checkbox" value="@trip.TripId">
+                                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                                <h5 class="mb-1 text-primary font-weight-bold">Trip @trip.TripId</h5>
+                                                <small class="text-muted">@trip.StartTime.ToString("g") - @trip.EndTime.ToString("g")</small>
+                                            </div>
+                                            <p class="mb-1 text-dark">
+                                                <span class="fw-bold">From: </span><span class="text-secondary">@trip.StartPointDescription</span>
+                                            </p>
+                                            <p class="mb-1 text-dark">
+                                                <span class="fw-bold">To: </span><span class="text-secondary">@trip.EndPointDescription</span>
+                                            </p>
+                                            <div class="d-flex flex-row justify-content-between px-4">
+                                                <p class="text-dark">
+                                                    <span class="fw-bold">Start : </span><span class="text-info">@trip.StartPoint.Latitude, @trip.StartPoint.Longitude</span>
+                                                </p>
+                                                <i class="fas fa-arrow"></i>
+                                                <p class="text-dark">
+                                                    <span class="fw-bold">End : </span><span class="text-info">@trip.EndPoint.Latitude, @trip.EndPoint.Longitude</span>
+                                                </p>
+                                            </div>
+                                        </label>
+                                    }
+                                </div>
+                                <div id="errorMessage" class="alert alert-danger d-none text-center mx-auto my-4 p-3 rounded shadow-sm" role="alert" style="max-width: 80%;">
+                                    Please select at least one trip!
+                                </div>
+                                <button type="submit" class="btn btn-success">Show on map</button>
+                            </form>
+
+                            return;
+                        }
+                        @if (Model.NoTripsFound())
+                        {
+                            <h3 class="text-center mb-5">No trips found in the specified range.</h3>
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <div class="card-footer text-muted d-flex justify-content-between">
+                <a href="@Url.Page("./Edit", new { vehicleId = Model.VehicleViewModel.VehicleId })" class="btn btn-primary d-flex align-items-center">
+                    <i class="fas fa-edit me-2"></i> Edit
+                </a>
+                <a href="@(HttpContext.Session.GetString("VehicleIndexReturnUrl") ?? "/Vehicles")" class="btn btn-secondary d-flex align-items-center">
+                    <i class="fas fa-list me-2"></i> Back to List
+                </a>
+                <a href="@Url.Page("./Delete", new { vehicleId = Model.VehicleViewModel.VehicleId })" class="btn btn-danger d-flex align-items-center">
+                    <i class="fas fa-trash me-2"></i> Delete
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

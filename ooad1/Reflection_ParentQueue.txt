@@ -1,0 +1,1 @@
+Everything except method names is ok. I just though to leave the initial Dequeue and Enqueue methods for child Queue<T> and named two new in Deque<T> also in this manner.

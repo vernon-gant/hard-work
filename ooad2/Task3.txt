@@ -1,0 +1,20 @@
+Class in C# as a module is normally created in a separate file in a certain namespace. They are just logical grouping of our modules. Because we gather files in a namespace an not in a package like in Java
+we can also create multiple "public classes" in one file and it will be okay. However when program becomes bigger then it makes sense to split each class in a separate file.
+
+When we want to use a class then we import a namespace where the class is located in. 
+
+using MotorPool.Domain.Reports;
+
+If it is not private or protected we can import it and start using. 
+
+Normally name of the root directory where class is located in is the namespace - if there are any subdirectories
+then a subpath is appended. For example we may have a root project directory - MotorPool.Domain - and then inside of the project have a subdir "Reports" and then it is a good practice to make a new
+namespace for this subdirectory - MotorPool.Domain.Reports. We could also make random names but no pls...
+
+C# classes are compiled into assemblies - dll or exe files. They are self contained units of deployment which contain compiled classes, resources and metadata. For example we can create a "Class Library"
+project, create a Azure Storage library, compile it and package it as a nuget package. This nuget package must also include a version, needed dependencies and other data. Finally we get a .nupkg file which
+contains all our compiled classes and other relevant metadata.
+
+To use a class from a namespace we need a reference to its assembly. For that we can either add a nuget package reference to our .csproj file so that the needed nuget package and its dependencies
+are downloaded and then loaded by .NET runtime. Or we can have a project reference to the project within the same solution and then during build stage the project which is referenced complied first
+and then also loaded into the memory. At the end everything boils down to an assembly reference.

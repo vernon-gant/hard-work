@@ -1,0 +1,11 @@
+In C# we can create a base type which can be parametrized with other types - these are normal Generics. We can even add constraints to the parametrized type.
+
+In order to gather multiple functions which can actively use eahc other in one module we have classes. Or even static classes and static functions. Not so long time ago they also added "pure" functions
+which do not belong to any classes at all and must preceed all class declarations.
+
+To solve a bigger problem we can organize a namespace where we gather modules which solve one common problem. For example a System.IO includes different modules which all solve one problem.
+
+To implement dynamic or polymorphic behavior C# offers abstract classes and interface. We can provide an implementation say afterwards for an interface and the needed method will be called
+at runtime.
+
+Integration of common behavior can be done using inheritance. We can leave all common code in one module and then inherit it and specialize in sub modules.

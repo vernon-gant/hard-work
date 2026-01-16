@@ -1,0 +1,162 @@
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+    height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.header-with-icon {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Align items vertically */
+    gap: 20px; /* Adjust the space between the H1 and the icon */
+}
+
+.header-with-icon .icon-plus {
+    font-size: 2rem; /* Makes the plus icon larger */
+    color: green; /* Sets the icon color to green */
+}
+
+.admin-back-link:hover {
+    text-decoration: none; /* Prevents underlining on hover */
+}
+
+.admin-back-link, .admin-back-link:hover {
+    color: inherit; /* Keeps text color consistent */
+}
+
+/* Table responsiveness and styling */
+.table-responsive {
+    margin-bottom: 1rem;
+}
+
+.table {
+    color: #333; /* Darker text for better readability */
+}
+
+.table th {
+    background-color: #f8f9fa; /* Light background for headers */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f2f2f2; /* Hover effect for table rows */
+}
+
+footer {
+    background-color: #f8f9fa;
+}
+
+.list-group-item {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.list-group-item-action:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-success {
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.text-primary {
+    font-size: 1.1rem;
+}
+
+.font-weight-bold {
+    font-weight: 600;
+}
+
+.form-check-input {
+    margin-top: 0;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.marker {
+    background-image: url('../img/marker.png');
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.mapboxgl-popup {
+    max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.shadow.rounded {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dee2e6;
+    padding: 20px;
+}
+
+.cool-link {
+    color: #051742;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.cool-link:hover, .cool-link:focus {
+    color: #0056b3;
+    text-decoration: underline;
+    transform: scale(1.05);
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: transform .3s ease-in-out;
+}
+
+.report-card {
+    transition: transform .3s ease, box-shadow .3s ease; /* Smooth transitions for hover effects */
+    cursor: pointer; /* Change cursor to indicate clickable */
+}
+
+.report-card:hover {
+    transform: translateY(-5px); /* Slightly lift the card on hover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, .2); /* Enhanced shadow on hover for a "lifted" effect */
+}
+
+.report-title {
+    font-size: 1.5rem; /* Larger font size for the report title */
+}
+
+.report-link {
+    color: inherit; /* Ensure the link color matches the card title color, might adjust based on your theme */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.report-link:hover {
+    text-decoration: none; /* Remove underline from links on hover too */
+}

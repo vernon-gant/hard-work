@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  motor=pool-app:
+    build:
+      context: ../src
+      dockerfile: ../src/Core/MotorPool.UI/Dockerfile
+    ports:
+      - "80:5000"
+    environment:
+      - ASPNETCORE_HTTP_PORTS=5000
+      - ASPNETCORE_ENVIRONMENT=Production
+      - GraphHopper__ApiKey=${GraphHopper__ApiKey}
+    depends_on:
+      - motorpool-db
+    networks:
+      - motorpool-network
+
+  motor-pool-db:
+    image: alekszakharov/motor-pool-prod:latest
+    ports:
+      - "1433:1433"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - motorpool-network
+
+networks:
+  motorpool-network:
+    driver: bridge
+
+volumes:
+  db-data:

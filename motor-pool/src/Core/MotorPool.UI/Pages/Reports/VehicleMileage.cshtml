@@ -1,0 +1,79 @@
+﻿@page
+@using MotorPool.Domain.Reports
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MotorPool.UI.Pages.Reports.VehicleMileageModel
+
+@{
+    ViewData["Title"] = "Vehicle Mileage Report";
+}
+
+<div class="container mt-4 d-flex flex-column justify-content-center align-items-center h-100">
+    <h2 class="text-center mb-5">@ViewData["Title"]</h2>
+
+    <div class="d-flex flex-column h-100 gap-5">
+        <form method="post">
+            <div class="row">
+                <div class="col">
+                    <label for="StartTime" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="StartTime" asp-for="ReportDto.StartTime">
+                    <span asp-validation-for="ReportDto.StartTime" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label for="EndTime" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="EndTime" asp-for="ReportDto.EndTime">
+                    <span asp-validation-for="ReportDto.EndTime" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label for="Period" class="form-label">Period</label>
+                    <select class="form-select" id="Period" asp-for="ReportDto.Period">
+                        <option value="">Select Period</option>
+                        @foreach (var period in Enum.GetValues(typeof(Period)))
+                        {
+                            <option value="@period">@period</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ReportDto.Period" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label for="VehicleId" class="form-label">Vehicle ID</label>
+                    <input type="number" class="form-control" id="VehicleId" asp-for="ReportDto.VehicleId">
+                    <span asp-validation-for="ReportDto.VehicleId" class="text-danger"></span>
+                </div>
+                <div class="col d-flex flex-column justify-content-center">
+                    <button type="submit" class="btn btn-primary mt-4">Generate Report</button>
+                </div>
+            </div>
+        </form>
+
+        @if (Model.VehicleMileageReport != null && Model.VehicleMileageReport.Result.Any())
+        {
+            <div class="row">
+                <div class="col">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Mileage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var entry in Model.VehicleMileageReport.Result)
+                        {
+                            <tr>
+                                <td>@entry.Key</td>
+                                <td>@entry.Value</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else if (Model.VehicleMileageReport?.Result.Count == 0)
+        {
+            <div class="alert alert-info" role="alert">
+                No data available for the selected period.
+            </div>
+        }
+    </div>
+</div>

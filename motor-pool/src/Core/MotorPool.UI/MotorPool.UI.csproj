@@ -1,0 +1,152 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>4c0d8be2-b3a1-4489-a4b6-b831a4c79e80</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MotorPool.Auth\MotorPool.Auth.csproj"/>
+        <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj"/>
+        <ProjectReference Include="..\MotorPool.Repository\MotorPool.Repository.csproj" />
+        <ProjectReference Include="..\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Geo\MotorPool.Services.Geo.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Manager\MotorPool.Services.Manager.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Reporting\MotorPool.Services.Reporting.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <_ContentIncludedByDefault Remove="wwwroot\css\site.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\favicon.ico"/>
+        <_ContentIncludedByDefault Remove="wwwroot\js\site.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\LICENSE"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\additional-methods.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\additional-methods.min.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\LICENSE.md"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt"/>
+        <_ContentIncludedByDefault Remove="Pages\Admin\Brands\Add.cshtml"/>
+        <_ContentIncludedByDefault Remove="Pages\Admin\Brands\List.cshtml"/>
+        <_ContentIncludedByDefault Remove="Pages\Admin\Vehicles\Add.cshtml"/>
+        <_ContentIncludedByDefault Remove="Pages\Admin\Vehicles\Edit.cshtml"/>
+        <_ContentIncludedByDefault Remove="Pages\Admin\Vehicles\List.cshtml"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css"/>
+        <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js"/>
+        <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js"/>
+        <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map"/>
+        <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js"/>
+        <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map"/>
+        <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js"/>
+        <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js"/>
+        <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js"/>
+        <None Include="wwwroot\lib\jquery\dist\jquery.min.js"/>
+        <None Include="wwwroot\lib\jquery\dist\jquery.min.map"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Pages\Drivers\"/>
+        <Folder Include="Pages\Enterprises\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="Pages\Vehicles\Edit.cshtml"/>
+    </ItemGroup>
+
+</Project>

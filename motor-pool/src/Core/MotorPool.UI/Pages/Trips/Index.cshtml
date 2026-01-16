@@ -1,0 +1,102 @@
+﻿@page
+@model MotorPool.UI.Pages.Trips.IndexModel
+@{
+    ViewData["Title"] = "Trips";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Trips</h1>
+
+    <!-- Filter Section -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <!-- Enterprises as Checkboxes -->
+                <div class="col-md-12">
+                    <label class="form-label">Select Enterprises</label>
+                    <div class="form-check">
+                        @foreach (var enterprise in Model.ManagerEnterprises)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="enterprise_@enterprise.EnterpriseId" name="enterpriseIds" value="@enterprise.EnterpriseId" @(Model.SelectedEnterpriseIds.Contains(enterprise.EnterpriseId) ? "checked" : "")>
+                                <label class="form-check-label" for="enterprise_@enterprise.EnterpriseId">
+                                    @enterprise.Name
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Date Filters -->
+                <div class="col-md-3">
+                    <label for="StartDate" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="StartDate" name="startDate" value="@Model.StartDate.ToString("yyyy-MM-dd")">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="EndDate" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="EndDate" name="endDate" value="@Model.EndDate.ToString("yyyy-MM-dd")">
+                </div>
+
+                <!-- Submit Button -->
+                <div class="col-md-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Show on Map Button -->
+    <form method="post" asp-page="/Trips/Map">
+        <div class="d-flex justify-content-end mb-4">
+            <button type="submit" class="btn btn-success">Show on Map</button>
+        </div>
+
+        <!-- Enterprise Trips Section -->
+        @if (Model.EnterpriseTrips.Any())
+        {
+            @foreach (var enterpriseTrips in Model.EnterpriseTrips)
+            {
+                var enterprise = Model.ManagerEnterprises.First(e => e.EnterpriseId == enterpriseTrips.Key);
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="card-title text-primary">@enterprise.Name</h4>
+                    </div>
+                    <div class="card-body">
+                        @if (enterpriseTrips.Value.Any())
+                        {
+                            <div class="list-group">
+                                @foreach (var trip in enterpriseTrips.Value)
+                                {
+                                    <label class="list-group-item d-flex align-items-center">
+                                        <input class="form-check-input me-2" type="checkbox" name="SelectedTrips" value="@trip.TripId" />
+                                        <div class="flex-grow-1">
+                                            <h5 class="mb-1">Trip @trip.TripId</h5>
+                                            <small>@trip.StartTime.ToString("g") - @trip.EndTime.ToString("g")</small>
+                                            <p class="mb-1">
+                                                <strong>From:</strong> @trip.StartPointDescription (@trip.StartPoint.Latitude, @trip.StartPoint.Longitude)
+                                            </p>
+                                            <p class="mb-1">
+                                                <strong>To:</strong> @trip.EndPointDescription (@trip.EndPoint.Latitude, @trip.EndPoint.Longitude)
+                                            </p>
+                                        </div>
+                                    </label>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted">No trips found for this enterprise.</p>
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-warning text-center" role="alert">
+                No trips found for the selected filters.
+            </div>
+        }
+    </form>
+</div>

@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model MotorPool.UI.Pages.Shared.ActionsModel
+
+@{
+    var routeValues = new Dictionary<string, string>
+    {
+        { Model.IdRouteParameterName, Model.IdValue.ToString() }
+    };
+}
+
+<a asp-page="./Details" asp-all-route-data="routeValues" title="Details" class="me-2 text-decoration-none">
+    <i class="fas fa-info-circle"></i>
+</a>
+@if (Model.HasChangeAccess)
+{
+    <a asp-page="./Edit" asp-all-route-data="routeValues" title="Edit" class="me-2 text-decoration-none">
+        <i class="fas fa-edit"></i>
+    </a>
+
+    <a asp-page="./Delete" asp-all-route-data="routeValues" title="Delete" class="me-2 text-decoration-none">
+        <i class="fas fa-trash-alt"></i>
+    </a>
+}

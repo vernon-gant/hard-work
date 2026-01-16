@@ -1,0 +1,1 @@
+Code result PUSH_NIL was redundant on my side. Probably we do not need it at all. Also had to add what special status codes return queries like PEEK_*. Otherwise everything correct.

@@ -1,0 +1,60 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MotorPool.Domain
+@model CreateModel
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<div class="header-with-icon mb-4">
+    <a asp-page="./Index">
+        <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
+    </a>
+    <h1 class="text-center mb-4">Add a new vehicle brand</h1>
+</div>
+<div class="row">
+    <div class="col-md-4 mx-auto d-flex flex-column justify-content-between px-0">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="VehicleBrandDto.CompanyName" class="control-label"></label>
+                <input asp-for="VehicleBrandDto.CompanyName" class="form-control"/>
+                <span asp-validation-for="VehicleBrandDto.CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrandDto.ModelName" class="control-label"></label>
+                <input asp-for="VehicleBrandDto.ModelName" class="form-control"/>
+                <span asp-validation-for="VehicleBrandDto.ModelName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrandDto.Type" class="control-label"></label>
+                <select asp-for="VehicleBrandDto.Type" asp-items="Html.GetEnumSelectList<VehicleType>()" class="form-control"></select>
+                <span asp-validation-for="VehicleBrandDto.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrandDto.FuelTankCapacityLiters" class="control-label"></label>
+                <input asp-for="VehicleBrandDto.FuelTankCapacityLiters" class="form-control"/>
+                <span asp-validation-for="VehicleBrandDto.FuelTankCapacityLiters" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrandDto.PayloadCapacityKg" class="control-label"></label>
+                <input asp-for="VehicleBrandDto.PayloadCapacityKg" class="form-control"/>
+                <span asp-validation-for="VehicleBrandDto.PayloadCapacityKg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrandDto.NumberOfSeats" class="control-label"></label>
+                <input asp-for="VehicleBrandDto.NumberOfSeats" class="form-control"/>
+                <span asp-validation-for="VehicleBrandDto.NumberOfSeats" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrandDto.ReleaseYear" class="control-label"></label>
+                <input asp-for="VehicleBrandDto.ReleaseYear" class="form-control"/>
+                <span asp-validation-for="VehicleBrandDto.ReleaseYear" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3 row">
+                <input type="submit" value="Create" class="btn btn-primary mx-auto col-md-4"/>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+Import will be my main example for this course :) But it has all what we need, for this task - to find a relation which can only
+be expressed with "is-a" or with inheritance in other words. As already mentioned one of such indicators is clear need for polymorphism.
+In case of the import clear need for polymorphism can be found in many places, but the core is the parsing part. Our "RawParser"
+which say reads from different types of files and then returns a list of headers and a list of entries is crying like a baby and
+requests polymorhism. We need a method "CanHandle" to understand which format the parser can handle and we also the "Parse" itself.
+The derived types such as "XlsxParser" or "PdfParser" can not be really expressed using 'has-a' relation. Because of the polymorhism
+and the fact that our parser will be used polymorphically in the ADTs above say as a polymorhpic field.
+
+And the 2nd example which I came up with looking at my browser window - window and tab. This is 100% composition and can no be even
+logically expressed through inheritance. A window can only "have" tabs. Probably we could make some nonsense like "OneTabWindow" derived
+class from main "Window" but this really does not make any sense.

@@ -1,0 +1,75 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MotorPool.Services.Drivers.Models
+@using MotorPool.Services.Manager
+@using MotorPool.UI.Pages.Shared
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header-with-icon mb-4">
+    <h1 class="text-center">Drivers</h1>
+    <a asp-page="./Create">
+        <i class="fa-solid fa-plus icon-plus"></i>
+    </a>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Drivers[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Drivers[0].LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Drivers[0].Salary)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (DriverViewModel driverViewModel in Model.Drivers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => driverViewModel.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => driverViewModel.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => driverViewModel.Salary)
+                </td>
+                <td>
+                    @await Html.PartialAsync("_Actions", new ActionsModel
+                    {
+                        IdRouteParameterName = "driverId",
+                        IdValue = driverViewModel.DriverId,
+                        HasChangeAccess = User.IsManager()
+                    })
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@await Html.PartialAsync("_Paging", new PagingModel
+{
+    CurrentPage = Model.CurrentPage,
+    TotalPages = Model.TotalPages,
+    PagesDisplayRange = Model.PAGES_DISPLAY_RANGE
+})
+
+<div class="row w-100 py-3">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <a asp-page="/Index" class="text-decoration-none admin-back-link">
+            <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
+            <span class="fw-bold" style="position: relative; bottom: 7px;">Back to enterprises</span>
+        </a>
+    </div>
+</div>

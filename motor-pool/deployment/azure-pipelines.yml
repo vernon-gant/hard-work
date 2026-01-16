@@ -1,0 +1,60 @@
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+      - /src/Utilities/*
+
+pool: localhost
+
+variables:
+  rootApiDir : src/Core/MotorPool.API
+
+stages:
+- stage: Building
+  jobs:
+    - job: Building
+      displayName: Motor Pool API
+      steps:
+        - task: NuGetToolInstaller@0
+          displayName: Install nuget
+          inputs:
+            versionSpec: 
+            checkLatest: true
+        - task: UseDotNet@2
+          displayName: Install .NET SDK
+          inputs:
+            packageType: 'sdk'
+            version: '8.0.x'
+        - task: DotNetCoreCLI@2
+          displayName: Restore nuget packages
+          inputs:
+            command: 'restore'
+            projects: 'src/Core/MotorPool.API/MotorPool.API.csproj'
+        - task: DotNetCoreCLI@2
+          displayName: Build solution
+          inputs:
+            command: 'build'
+            projects: '$(rootApiDir)/MotorPool.API.csproj'
+            arguments: '--configuration Release'
+        - task: DotNetCoreCLI@2
+          displayName: Testing
+          inputs:
+            command: 'test'
+            projects: 'tests/Core/*.csproj'
+            arguments: '--configuration Release'
+    - job: Docker
+      displayName: Creating docker
+      dependsOn:
+      - Building
+      condition: in(dependencies.Building.result, 'Succeeded', 'SucceededWithIssues')
+      steps:
+      - task: Docker@2
+        displayName: Building and pushing
+        inputs:
+          containerRegistry: 'motor-pool-registry'
+          repository: 'API'
+          command: 'buildAndPush'
+          Dockerfile: '$(rootApiDir)/Dockerfile'
+          buildContext: 'src/Core'

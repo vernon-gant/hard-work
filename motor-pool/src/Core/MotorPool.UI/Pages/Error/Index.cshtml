@@ -1,0 +1,26 @@
+﻿@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="text-center">
+    <h1 class="display-4 text-danger">Oops!</h1>
+    <p class="lead">An error occurred.</p>
+
+    <h2 class="text-warning">@Model.ErrorType</h2>
+    <p>@Model.ErrorMessage</p>
+
+    @if (Model.ShowRequestId)
+    {
+        <p>
+            <strong>Request ID:</strong> <code>@Model.RequestId</code>
+        </p>
+    }
+
+    <p>
+        Please try again later or contact support if the problem persists.
+    </p>
+
+    <a href="@Model.ReturnLink" class="btn btn-primary">Return to @if (Model.ReturnLink == "/") { <span>Home</span> } else { <span>previous page</span> }</a>
+</div>

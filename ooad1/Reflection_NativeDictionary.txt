@@ -1,0 +1,2 @@
+When I was thinking about Put design I though that it is indifferent about what actually completed - we just added a new key value or we overrode value for an existing key because the result is still the same. 
+However it is not. It indeed makes sense to show to the client what actually happened. So we change the post condition and add a helper query for querying status for this method.

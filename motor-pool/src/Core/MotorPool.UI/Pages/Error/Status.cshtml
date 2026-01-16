@@ -1,0 +1,18 @@
+﻿@page
+@model Status
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-1 fw-bold text-danger">Error @Model.StatusCode</h1>
+        <p class="fs-4">
+            <span class="text-secondary">@Model.ErrorMessage</span>
+        </p>
+        <p class="lead">
+            The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+        </p>
+        <a href="/" class="btn btn-primary">Go to Homepage</a>
+    </div>
+</div>

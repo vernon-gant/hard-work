@@ -1,0 +1,104 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MotorPool.Services.Manager
+@using MotorPool.UI.Pages.Shared
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Vehicle brands management";
+}
+
+<div class="header-with-icon mb-4">
+    <h1 class="text-center">Vehicle brands</h1>
+    @if (User.IsManager())
+    {
+        <a asp-page="./Create">
+            <i class="fa-solid fa-plus icon-plus"></i>
+        </a>
+    }
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].ModelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].FuelTankCapacityLiters)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].PayloadCapacityKg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].NumberOfSeats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].ReleaseYear)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var vehicleBrand in Model.VehicleBrand)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleBrand.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleBrand.ModelName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleBrand.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleBrand.FuelTankCapacityLiters)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleBrand.PayloadCapacityKg)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleBrand.NumberOfSeats)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleBrand.ReleaseYear)
+                </td>
+                @if (User.IsManager())
+                {
+                    <td class="text-nowrap">
+                        @await Html.PartialAsync("_Actions", new ActionsModel
+                        {
+                            IdRouteParameterName = "vehicleBrandId",
+                            IdValue = vehicleBrand.VehicleBrandId,
+                            HasChangeAccess = User.IsManager()
+                        })
+                        <a asp-page="/Vehicles/Index" asp-route-vehicleBrandId="@vehicleBrand.VehicleBrandId" class="text-decoration-none">
+                            <i class="fas fa-car" title="To vehicles"></i>
+                        </a>
+                    </td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@if (User.IsManager())
+{
+    <div class="row w-100 py-3">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <a asp-page="/Index" class="text-decoration-none admin-back-link">
+                <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
+                <span class="fw-bold" style="position: relative; bottom: 7px;">Back enterprises</span>
+            </a>
+        </div>
+    </div>
+}

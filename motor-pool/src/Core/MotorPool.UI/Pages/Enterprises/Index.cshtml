@@ -1,0 +1,82 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MotorPool.Repository.Enterprise
+@using MotorPool.Services.Enterprise.Models
+@using MotorPool.Services.Manager
+@using MotorPool.UI.Pages.Shared
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Enterprises management";
+}
+
+<div class="header-with-icon mb-4">
+    <h1 class="text-center">Enterprises</h1>
+    <a asp-page="./Create">
+        <i class="fa-solid fa-plus icon-plus"></i>
+    </a>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Enterprises[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enterprises[0].City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enterprises[0].Street)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enterprises[0].VAT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enterprises[0].FoundedOn)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (SimpleEnterpriseViewModel enterpriseViewModel in Model.Enterprises)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => enterpriseViewModel.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => enterpriseViewModel.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => enterpriseViewModel.Street)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => enterpriseViewModel.VAT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => enterpriseViewModel.FoundedOn)
+                </td>
+                <td class="text-nowrap">
+                    @await Html.PartialAsync("_Actions", new ActionsModel
+                    {
+                        IdRouteParameterName = "enterpriseId",
+                        IdValue = enterpriseViewModel.EnterpriseId,
+                        HasChangeAccess = User.IsManager()
+                    })
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+
+<div class="row w-100 py-3">
+    <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+        <a asp-page="/Index" class="text-decoration-none admin-back-link">
+            <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
+            <span class="fw-bold" style="position: relative; bottom: 7px;">Back to manager panel</span>
+        </a>
+    </div>
+</div>

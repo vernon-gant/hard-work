@@ -1,0 +1,14 @@
+As already mentioned in the course examples of subtyping can be met naturally in many sciences. For example geometry - we have
+an abstract concept of "Shape" and then subtypes which are semantically not the same - Circle, Rectangle, Triangle. There are core
+differences in the way how we say compute their square.
+
+Say we want to have notifications feature in the system. Then very probably that we will need a basic functionality
+for handling notifications. This could be some "AbstractNotificationService" with common methods for handling notifications.
+Then we want to have a more specialized version say "SmsNotificationService" or even "EmailNotificationService". They do not
+introduce any new global capabilities and rather restrict the usage to some concrete scenario. For example SmsNotificationService
+would inherit the general notification capabilities and then specialize them to send over sms.
+
+Whereas a "AnalyticsNotificationService" which would introduce new methods for performing analytics of the sent notifications is
+an example of extension inheritance. The superclass does not have the operations such as "TrackDeliveryStatus" or similar. Probably this
+service can even include thorough composition the sending method itself and we could choose the sending method like "Sms" or "Email"
+polymorphically.

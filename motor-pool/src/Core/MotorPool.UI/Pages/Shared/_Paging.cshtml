@@ -1,0 +1,49 @@
+﻿@model PagingModel
+
+@{
+    RouteValueDictionary allQueryParameters = new ();
+
+    foreach (var queryParam in Context.Request.Query)
+    {
+        if (queryParam.Key.ToLower() != "currentpage") allQueryParameters[queryParam.Key] = queryParam.Value;
+    }
+
+    string? GeneratePageLink(int pageNumber)
+    {
+        RouteValueDictionary pageQueryParameters = new (allQueryParameters)
+        {
+            ["currentPage"] = pageNumber
+        };
+
+        return Url.Page("./Index", pageQueryParameters);
+    }
+}
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+            <a class="page-link" href="@GeneratePageLink(Model.CurrentPage - 1)">Previous</a>
+        </li>
+
+        @for (int i = Math.Max(1, Model.CurrentPage - Model.PagesDisplayRange); i <= Math.Min(Model.TotalPages, Model.CurrentPage + Model.PagesDisplayRange); i++)
+        {
+            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@GeneratePageLink(i)">@i</a>
+            </li>
+        }
+
+        @if (Model.CurrentPage + Model.PagesDisplayRange < Model.TotalPages)
+        {
+            <li class="page-item disabled">
+                <a class="page-link">...</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="@GeneratePageLink(Model.TotalPages)">@Model.TotalPages</a>
+            </li>
+        }
+
+        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="@GeneratePageLink(Model.CurrentPage + 1)">Next</a>
+        </li>
+    </ul>
+</nav>
