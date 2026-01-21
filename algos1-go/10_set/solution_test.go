@@ -35,3 +35,25 @@ func Test_GivenEmptySet_WhenPuttingMultipleValues_ThenTheyAllArePresent(t *testi
 	assert.True(t, set.Get(50))
 	assert.True(t, set.Get(25))
 }
+
+func Test_GivenNonEmptySet_WhenPuttingDuplicateValues_ThenNothingChanges(t *testing.T) {
+	// Given
+	set := Init[int]()
+	set.Put(100)
+	set.Put(-100)
+	set.Put(50)
+	set.Put(25)
+
+	// When
+	set.Put(100)
+	set.Put(-100)
+	set.Put(50)
+	set.Put(25)
+
+	// Then
+	assert.Equal(t, 4, set.Size())
+	assert.True(t, set.Get(100))
+	assert.True(t, set.Get(-100))
+	assert.True(t, set.Get(50))
+	assert.True(t, set.Get(25))
+}
