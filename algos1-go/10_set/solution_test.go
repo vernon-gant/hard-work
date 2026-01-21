@@ -8,7 +8,7 @@ import (
 
 // PUT TESTS
 
-func Test_GivenEmptySet_WhenPuttingSingleValue_ThenItIsPresent(t *testing.T) {
+func Test_GivenEmptySet_WhenPuttingSingleValue_ThenCanBeFound(t *testing.T) {
 	// Given
 	set := Init[int]()
 

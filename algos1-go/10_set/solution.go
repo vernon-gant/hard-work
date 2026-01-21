@@ -36,11 +36,12 @@ func (s *PowerSet[T]) Put(value T) {
 		s.occupied[s.count] = true
 		s.values[s.count] = value
 		s.count++
+		return
 	}
 
 	insertIdx := 0
 
-	for ; insertIdx < s.count - 1 && !s.occupied[insertIdx]; insertIdx++ {
+	for ; insertIdx < s.count && s.occupied[insertIdx]; insertIdx++ {
 		if s.values[insertIdx] == value {
 			return
 		}
@@ -49,7 +50,7 @@ func (s *PowerSet[T]) Put(value T) {
 		}
 	}
 
-	copy(s.occupied[insertIdx + 1:s.count + 1], s.occupied[insertIdx:s.count])
+	copy(s.values[insertIdx + 1:s.count + 1], s.values[insertIdx:s.count])
 	s.values[insertIdx] = value
 	s.count++
 	s.occupied[s.count - 1] = true
