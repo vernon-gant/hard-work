@@ -1,9 +1,9 @@
-package set
+package main
 
 import (
 	"constraints"
-	// "os"
-	//"strconv"
+	"os"
+	"strconv"
 )
 
 const SET_SIZE = 20000
