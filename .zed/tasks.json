@@ -1,0 +1,14 @@
+[
+  {
+    "label": "Go Test - Manual Folder",
+    "command": "go",
+    "args": ["test", "-v", "./11_bloom_filter"],
+    "cwd": "${ZED_WORKTREE_ROOT}/algos1-go",
+  },
+  {
+    "label": "Go Build - Manual Folder",
+    "command": "go",
+    "args": ["build", "-v", "./11_bloom_filter"],
+    "cwd": "${ZED_WORKTREE_ROOT}/algos1-go",
+  },
+]
