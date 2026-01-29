@@ -1,0 +1,24 @@
+# Denormalization as a way to improve semantics in relations between data
+
+For all examples I consider the domain of an application which helps consultants manage projects for people who were sent from the labour market service to a private company(where these consultants work) so that this company helps them using diverse
+activities like workshops, trainings, coaching, courses and other stuff to find a job.
+
+Such people do not just enter this consultation process in the vacuum. They are enrolled into a specific project. For example if a person has a disability, or he was on a sick leave say for 3 years. The categorisation of the problem is normally represented as a project. For example a "fit2work" project for people with disabilities.
+
+Consultants then support them, organize their growth process, contact companies in order to find a job for this person. Consultants may have different projects and be responsible for different people in those projects. They document what they do, create reports, organize group events and so on. This was a short introduction :)
+
+## Modules for projects
+
+Application implements different functionalities and exposes them through modules. Admins can configure which modules a project has access to based on budget, needs and so on. Because modules are static "program components", they change only after dev team released a new module. Normally they are assigned to the project once during its creation and then they remain the same, because everything is tied to budget and project domain.
+
+So the relation is can be interpreted as "Project has a list of modules". And currently the setup is following: we have `Modules` table in the database, then we also have a `Project` and implement the relation using a `Many-To-Many` approach through a `ProjectModule` table. But do we really need this all?
+
+When we load a project, all its modules are loaded by the frontend. On the frontend side there is a class containing hard coded Guids of each module and in the frontend code the "feature flags" on pages are implemented using efficient null checks after looking through the `.ProjectModules` property and finding the module which could be shown on a single page. For the module itself we store only the name. **But the main use case is that we just load modules for each project and check if we need to show its functionality on the page.**
+
+There is not use case for retrieving all projects with modules A, B, C. So this brings us to the same point which was mentined in the lesson - the reason to choose relation implementation strategy is the use case. We only need to get modules which are assigned to the project. We even do not need to store modules in the database, if their guids are hardcoded in the static class. Concrete modules can be implemented using classes and when we assign a project to the module, we just add its id to the list of project modules, **because this is everything we need**. This eliminates need for a modules table in the database, for the many to many relationship, because we do not touch them very often, we do not store any important information for the "owns" relation, we do not perform any search in the database, no complex queries -> **no need for strict normalization**. So we delete both tables, add `ModulesSnapshots` column where we dump the serialized JSON of the modules list which has config/enabled and of course id. The model now looks simpler, maybe the performance gain is not 1000% and even not 10 :) but we have modelled the data relations according to the requirements keeping in mind what we need.
+
+## Participant and Participant Case
+
+This example is more close to denormalization described in the lesson. Participants aka job seekers can have multiple consultation cases. Say he started his program, was searching for a job/attending training, then almost found a job, but got rejected. Then a new cycle starts. For this entry we have the `ParticipantCase` model with fields like `InitialInterview` or `TerminationInfo`.
+
+The main use case, of course, that we want to see all of them for a single participant. One of them is the **current case** which is explicitly marked. A typical one to many relationship, but for some reason it was modelled using the `CurrentParticipantCase` relation table where we store just the `ids` of `ParticipantCase` and `Participant`. Because queries come only to one side -> to the participant case when we know the participant, it makes more sense to denormalize the relation and just add either a `CurrentParticipantCase` column to the `Participant`, what I personally like more than the second option: add bool flag `IsCurrent` to the `ParticipantCase`. And of course each `ParticipantCase` still has a reference to the parent `Participant` because the relation sounds **Participant has many participant cases**. No need for `many to many` and a separate table.
