@@ -2,3 +2,4 @@
 *.DotSettings.User
 **/bin/**
 **/obj/**
+**/__pycache__/**
