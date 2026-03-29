@@ -175,8 +175,6 @@ class InMemoryEventStore(IEventStore):
         return snapshot
 
 
-# ── Event Coordinator ─────────────────────────────────────────────────────────
-
 class EventCoordinator:
     def __init__(self, store: IEventStore, transfer_fn) -> None:
         self._store = store
