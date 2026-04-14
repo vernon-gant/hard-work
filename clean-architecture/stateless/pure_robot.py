@@ -1,5 +1,3 @@
-pure_robot.py
-
 import math
 from collections import namedtuple
 
