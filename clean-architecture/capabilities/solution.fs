@@ -6,6 +6,9 @@
 // But what was mind blowing is how we actually encode the robot state in types and then make the compiler enforce the type safety of the robot's operations. In OOP we achieve the same
 // using interfaces, I think we could do the same with type constraints in C# with interfaces, but the syntax will be more verbose. I was really impressed how elegant it can be here.
 // And this is even considering the fact that I do not know F# and was using the pocket jarvis. I think with computed expressions and other F# features we can do really mad stuff...
+// 
+// Okay, as I see I got the idea a bit incorrectly, I though that literally returning the available funcitons was just the naive approach. But it was not... But I still liked
+// practicing with F# and capabilities over types!
 
 open System
 
