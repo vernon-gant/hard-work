@@ -1,5 +1,5 @@
-from dataclasses import dataclass, field, replace
-from typing import Callable, Dict, Tuple
+from dataclasses import dataclass, replace
+from typing import Callable, Tuple
 
 from pymonad.state import State
 
@@ -10,7 +10,6 @@ from pymonad.state import State
 @dataclass(frozen=True)
 class MachineState:
     stack: Tuple[int, ...] = ()
-    registers: Dict[str, int] = field(default_factory=dict)
     pc: int = 0
     trace: Tuple[Tuple[int, str], ...] = ()
 
