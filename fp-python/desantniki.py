@@ -8,7 +8,7 @@ from pymonad.tools import curry
 
 # Was an interesting one. For me the challenge was more to use types which we studied and not the for loop absence - recursion is always there.
 # I do not think that I used everything wisely, but at least most of the tools are covered. I thought about the state monad, but could not wire up
-# it together with recursion. Myself :)
+# it together with recursion. Myself :) I could definitely avoid the Compose, but just wanted to include it, actually not needed.
 
 
 @curry(3)
