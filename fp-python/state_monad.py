@@ -3,6 +3,9 @@ from typing import Callable, Dict, Tuple
 
 from pymonad.state import State
 
+# The only interesting task I could get from claude. I know, probably we could add here the Either or Maybe to avoid this ugly @instruction decorator, but still works quite nice.
+# I have never even tried to implement my own interpreter, but this micro vesion makes me fell not that nervous when thinking about how it works :)
+
 
 @dataclass(frozen=True)
 class MachineState:
