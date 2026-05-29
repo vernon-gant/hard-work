@@ -6,9 +6,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="First.fs" />
-        <Compile Include="Second.fs" />
-        <Compile Include="Third.fs" />
+        <Compile Include="Print.fs" />
+        <Compile Include="Let.fs" />
+        <Compile Include="Pattern.fs" />
+        <Compile Include="Rec.fs" />
     </ItemGroup>
 
 </Project>
