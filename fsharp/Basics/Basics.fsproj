@@ -8,6 +8,7 @@
     <ItemGroup>
         <Compile Include="First.fs" />
         <Compile Include="Second.fs" />
+        <Compile Include="Third.fs" />
     </ItemGroup>
 
 </Project>
