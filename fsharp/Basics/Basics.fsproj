@@ -10,6 +10,7 @@
         <Compile Include="Let.fs" />
         <Compile Include="Pattern.fs" />
         <Compile Include="Rec.fs" />
+        <Compile Include="Operators.fs" />
     </ItemGroup>
 
 </Project>
