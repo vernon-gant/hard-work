@@ -8,17 +8,16 @@ let rec pow (text, n) =
 // 17.2
 let rec isIthChar (text: string, position, letter) =
     match position with
-    | n when n >= String.length text || n < 0 -> false
+    | n when n >= text.Length || n < 0 -> false
     | _ -> text.[position] = letter
 
 // 17.3
 let rec occFromIth (text: string, position, letter) =
-    let length = String.length text
     let rec occFromIthRec currentPosition acc =
         match currentPosition with
-        | n when n = length -> acc
+        | n when n = text.Length -> acc
         | n when text.[n] = letter -> occFromIthRec (currentPosition + 1) (acc + 1)
         | _ -> occFromIthRec (currentPosition + 1) acc
     match position with
-    | n when n >= length || n < 0 -> 0
+    | n when n >= text.Length || n < 0 -> 0
     | _ -> occFromIthRec position 0
