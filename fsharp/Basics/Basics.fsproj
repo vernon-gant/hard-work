@@ -6,11 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Print.fs" />
-        <Compile Include="Let.fs" />
-        <Compile Include="Pattern.fs" />
-        <Compile Include="Rec.fs" />
-        <Compile Include="Operators.fs" />
+        <Compile Include="Print.fs"/>
+        <Compile Include="Let.fs"/>
+        <Compile Include="Pattern.fs"/>
+        <Compile Include="Rec.fs"/>
+        <Compile Include="Operators.fs"/>
+        <Compile Include="StringTasks.fs" />
     </ItemGroup>
 
 </Project>
