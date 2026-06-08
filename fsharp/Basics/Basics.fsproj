@@ -13,6 +13,7 @@
         <Compile Include="Operators.fs"/>
         <Compile Include="StringTasks.fs" />
         <Compile Include="Composition.fs" />
+        <Compile Include="ClosureTasks.fs" />
     </ItemGroup>
 
 </Project>

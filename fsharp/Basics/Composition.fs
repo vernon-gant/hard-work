@@ -1,4 +1,6 @@
-﻿// 20.3.1
+﻿module CompositionTasks
+
+// 20.3.1
 let vat (n : int) (x : float) = x + (float(n) / 100.0 * x)
 
 // 20.3.2
