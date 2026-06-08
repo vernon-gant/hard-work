@@ -12,6 +12,7 @@
         <Compile Include="Rec.fs"/>
         <Compile Include="Operators.fs"/>
         <Compile Include="StringTasks.fs" />
+        <Compile Include="Composition.fs" />
     </ItemGroup>
 
 </Project>

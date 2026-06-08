@@ -1,4 +1,6 @@
-﻿// 17.1
+﻿module StringTasks
+
+// 17.1
 let rec pow (text, n) =
     match n with
     | n when n <= 0 -> ""

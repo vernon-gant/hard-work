@@ -1,3 +1,5 @@
+module Rec
+
 // 7.1.1
 let rec fibo =
     function
