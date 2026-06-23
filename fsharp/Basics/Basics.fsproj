@@ -16,6 +16,7 @@
         <Compile Include="ClosureTasks.fs" />
         <Compile Include="OperatorsTasks.fs" />
         <Compile Include="RecordTasks.fs" />
+        <Compile Include="DU.fs" />
     </ItemGroup>
 
 </Project>
