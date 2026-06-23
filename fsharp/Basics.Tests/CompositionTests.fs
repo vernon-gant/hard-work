@@ -1,6 +1,6 @@
 ﻿module CompositionTests
 
-open Composition
+open CompositionTasks
 open Xunit
 open FsUnit.Xunit
 

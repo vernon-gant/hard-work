@@ -1,3 +1,5 @@
+module DU
+
 type F =
     | AM
     | PM

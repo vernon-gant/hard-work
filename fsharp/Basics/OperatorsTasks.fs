@@ -1,3 +1,5 @@
+module OperatorsTasks
+
 // 23.4.1
 let toCopper (g, s, c) = g * 240 + s * 12 + c
 
