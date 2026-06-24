@@ -18,6 +18,7 @@
         <Compile Include="RecordTasks.fs" />
         <Compile Include="DU.fs" />
         <Compile Include="ListTasks.fs" />
+        <Compile Include="BasicOperationsOnListTasks.fs" />
     </ItemGroup>
 
 </Project>
