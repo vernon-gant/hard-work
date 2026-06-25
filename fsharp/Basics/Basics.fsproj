@@ -19,6 +19,7 @@
         <Compile Include="DU.fs" />
         <Compile Include="ListTasks.fs" />
         <Compile Include="BasicOperationsOnListTasks.fs" />
+        <Compile Include="ListTasks2.fs" />
     </ItemGroup>
 
 </Project>
