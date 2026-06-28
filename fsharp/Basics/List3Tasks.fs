@@ -1,5 +1,3 @@
-module List3Tasks
-
 // 41.4.1
 let list_filter f xs = List.foldBack (fun v acc -> if f v then v :: acc else acc) xs []
 
