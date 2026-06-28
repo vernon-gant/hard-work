@@ -21,6 +21,7 @@
         <Compile Include="BasicOperationsOnListTasks.fs" />
         <Compile Include="List2Tasks.fs" />
         <Compile Include="List3Tasks.fs" />
+        <Compile Include="SetTasks.fs" />
     </ItemGroup>
 
 </Project>
