@@ -1,4 +1,4 @@
-module Basics.ListTasks2
+module ListTasks2
 
 // 40.1
 let rec sum (p, xs) =

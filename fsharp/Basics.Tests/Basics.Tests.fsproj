@@ -7,8 +7,9 @@
 
     <ItemGroup>
         <Compile Include="CompositionTests.fs" />
-        <Compile Include="ListTaskTests.fs" />
+        <Compile Include="List1Tests.fs" />
         <Compile Include="BasicOperationsOnListTests.fs" />
+        <Compile Include="List3Tests.fs" />
     </ItemGroup>
 
     <ItemGroup>

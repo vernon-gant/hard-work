@@ -1,3 +1,5 @@
+module BasicOperationsOnListTasks
+
 // 39.1
 let rec rmodd x =
     let indices = [ 1 .. 2 .. (List.length x) - 1 ]
