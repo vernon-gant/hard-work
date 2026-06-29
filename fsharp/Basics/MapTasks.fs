@@ -7,7 +7,7 @@ let try_find key m =
             None
         else
             let mid = (low + high) / 2
-            let (entryKey, value) = entries[mid]
+            let (entryKey, value) = entries.[mid]
 
             match compare key entryKey with
             | 0 -> Some value
