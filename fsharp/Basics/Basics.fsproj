@@ -23,6 +23,7 @@
         <Compile Include="List3Tasks.fs" />
         <Compile Include="SetTasks.fs" />
         <Compile Include="MapTasks.fs" />
+        <Compile Include="Imperative.fs" />
     </ItemGroup>
 
 </Project>
