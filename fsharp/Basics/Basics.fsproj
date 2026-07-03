@@ -16,6 +16,7 @@
         <Compile Include="ClosureTasks.fs" />
         <Compile Include="Operators2Tasks.fs" />
         <Compile Include="RecordTasks.fs" />
+        <Compile Include="TailRecursion.fs" />
         <Compile Include="DUTasks.fs" />
         <Compile Include="ListTasks.fs" />
         <Compile Include="BasicOperationsOnListTasks.fs" />
