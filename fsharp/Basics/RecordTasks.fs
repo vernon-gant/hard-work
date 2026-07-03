@@ -1,4 +1,6 @@
-﻿type TimeOfDay = { hours: int; minutes: int; f: string }
+﻿module RecordTasks
+
+type TimeOfDay = { hours: int; minutes: int; f: string }
 
 let (.>.) x y =
     let convert time =

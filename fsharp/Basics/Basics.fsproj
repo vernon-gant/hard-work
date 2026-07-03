@@ -6,17 +6,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Print.fs"/>
-        <Compile Include="Let.fs"/>
-        <Compile Include="Pattern.fs"/>
-        <Compile Include="Rec.fs"/>
-        <Compile Include="Operators.fs"/>
-        <Compile Include="StringTasks.fs" />
-        <Compile Include="Composition.fs" />
-        <Compile Include="ClosureTasks.fs" />
+        <Compile Include="PrintTasks.fs" />
+        <Compile Include="LetTasks.fs" />
+        <Compile Include="PatternMatchingTasks.fs" />
+        <Compile Include="RecTasks.fs" />
         <Compile Include="OperatorsTasks.fs" />
+        <Compile Include="StringTasks.fs" />
+        <Compile Include="CompositionTasks.fs" />
+        <Compile Include="ClosureTasks.fs" />
+        <Compile Include="Operators2Tasks.fs" />
         <Compile Include="RecordTasks.fs" />
         <Compile Include="TailRecursion.fs" />
+        <Compile Include="DUTasks.fs" />
+        <Compile Include="ListTasks.fs" />
+        <Compile Include="BasicOperationsOnListTasks.fs" />
+        <Compile Include="List2Tasks.fs" />
+        <Compile Include="List3Tasks.fs" />
+        <Compile Include="SetTasks.fs" />
+        <Compile Include="MapTasks.fs" />
+        <Compile Include="Imperative.fs" />
     </ItemGroup>
 
 </Project>

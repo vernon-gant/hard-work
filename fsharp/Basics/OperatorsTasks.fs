@@ -1,24 +1,12 @@
-// 23.4.1
-let toCopper (g, s, c) = g * 240 + s * 12 + c
+module Operators
 
-let fromCopper copperTotal =
-    let copper = copperTotal % 12
-    let total = copperTotal / 12
-    let silver = total % 20
-    let gold = total / 20
-    (gold, silver, copper)
+// 16.1
+let notDivisible (n, m) = m % n = 0
 
-let (.+.) x y = fromCopper (toCopper x + toCopper y)
-let (.-.) x y = fromCopper (toCopper x - toCopper y)
-
-
-// 23.4.2
-let (.+) (a: float, b: float) (c: float, d: float) = (a + c, b + d)
-
-let (.-) (a: float, b: float) (c: float, d: float) = (a - c, b - d)
-
-let (.*) (a: float, b: float) (c: float, d: float) = (a * c - b * d, b * c + a * d)
-
-let (./) (a: float, b: float) (c: float, d: float) =
-    let denominator = c * c + d * d
-    ((a * c + b * d) / denominator, (b * c - a * d) / denominator)
+// 16.2
+let prime n =
+    if n < 2 then
+        false
+    else
+        let limit = int (sqrt (float n))
+        seq { 2..limit } |> Seq.forall (fun d -> n % d <> 0)
