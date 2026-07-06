@@ -25,6 +25,7 @@
         <Compile Include="SetTasks.fs" />
         <Compile Include="MapTasks.fs" />
         <Compile Include="Imperative.fs" />
+        <Compile Include="SequenceExpressions.fs" />
     </ItemGroup>
 
 </Project>
