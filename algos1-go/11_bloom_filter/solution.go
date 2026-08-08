@@ -1,10 +1,8 @@
-package main
-
-import "os"
+package bloom_filter
 
 type BloomFilter struct {
 	filter_len int
-	bit_array uint32
+	bit_array  uint32
 }
 
 func Init() BloomFilter {
@@ -14,7 +12,7 @@ func Init() BloomFilter {
 	}
 }
 
-func (f*BloomFilter) Hash1(s string) int {
+func (f *BloomFilter) Hash1(s string) int {
 	sum := 0
 	for _, char := range s {
 		code := int(char)
@@ -23,7 +21,7 @@ func (f*BloomFilter) Hash1(s string) int {
 	return sum
 }
 
-func (f*BloomFilter) Hash2(s string) int {
+func (f *BloomFilter) Hash2(s string) int {
 	sum := 0
 	for _, char := range s {
 		code := int(char)
@@ -32,13 +30,13 @@ func (f*BloomFilter) Hash2(s string) int {
 	return sum
 }
 
-func (f*BloomFilter) Add(s string) {
+func (f *BloomFilter) Add(s string) {
 	firstHash, secondHash := f.Hash1(s), f.Hash2(s)
 	f.bit_array |= (1 << firstHash)
 	f.bit_array |= (1 << secondHash)
 }
 
-func (f*BloomFilter) IsValue(s string) bool {
+func (f *BloomFilter) IsValue(s string) bool {
 	firstHash, secondHash := f.Hash1(s), f.Hash2(s)
-	return f.bit_array & (1 << firstHash) != 0 && f.bit_array & (1 << secondHash) != 0
+	return f.bit_array&(1<<firstHash) != 0 && f.bit_array&(1<<secondHash) != 0
 }
