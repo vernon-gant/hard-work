@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+python_files = ["Task*Tests.py"]
+
+[tool.pyright]
+extraPaths = ["src"]
+venvPath = "."
+venv = ".venv"
