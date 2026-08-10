@@ -30,4 +30,17 @@
     "cwd": "${ZED_WORKTREE_ROOT}/algos3-python",
     "tags": ["py-test"],
   },
+  {
+    "label": "🐍 algos3-python: copy github url",
+    "command": "powershell",
+    "args": [
+      "-NoProfile",
+      "-NonInteractive",
+      "-Command",
+      "Set-Clipboard",
+      "-Value",
+      "https://github.com/vernon-gant/hard-work/tree/master/algos3-python/src"
+    ],
+    "reveal": "never"
+  }
 ]
