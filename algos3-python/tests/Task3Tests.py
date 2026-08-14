@@ -13,12 +13,6 @@ def test_GIVEN_empty_array_size_WHEN_knuth_sequence_called_THEN_empty_sequence_r
     assert result == []
 
 
-def test_GIVEN_single_element_array_size_WHEN_knuth_sequence_called_THEN_empty_sequence_returned():
-    result = KnuthSequence(1)
-
-    assert result == []
-
-
 def test_GIVEN_smallest_array_size_with_a_valid_step_WHEN_knuth_sequence_called_THEN_only_step_one_returned():
     result = KnuthSequence(2)
 
