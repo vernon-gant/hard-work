@@ -1,7 +1,7 @@
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
-python_files = ["Task*Tests.py"]
+python_files = ["Task*Tests.py", "HeapTests.py"]
 
 [tool.pyright]
 extraPaths = ["src"]
