@@ -13,19 +13,19 @@
   },
   {
     "label": "🐍 algos3-python pytest: all",
-    "command": ".venv/Scripts/python.exe",
+    "command": "venv/Scripts/python.exe",
     "args": ["-m", "pytest"],
     "cwd": "${ZED_WORKTREE_ROOT}/algos3-python",
   },
   {
     "label": "🐍 algos3-python pytest: current file's tests",
-    "command": ".venv/Scripts/python.exe",
+    "command": "venv/Scripts/python.exe",
     "args": ["-m", "pytest", "-k", "${ZED_STEM}"],
     "cwd": "${ZED_WORKTREE_ROOT}/algos3-python",
   },
   {
     "label": "🐍 algos3-python pytest: test under cursor",
-    "command": ".venv/Scripts/python.exe",
+    "command": "venv/Scripts/python.exe",
     "args": ["-m", "pytest", "-k", "${ZED_SYMBOL}"],
     "cwd": "${ZED_WORKTREE_ROOT}/algos3-python",
     "tags": ["py-test"],
