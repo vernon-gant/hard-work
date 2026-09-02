@@ -1,5 +1,11 @@
 {
   // For a full list of overridable settings, and general information on folder-specific settings,//zed.dev/docs/configuring-zed#settings-files
   "show_edit_predictions": false,
-  "disable_ai": false
+  "disable_ai": false,
+  "feature_flags": { "notebooks": "on" },
+  "jupyter": {
+    "kernel_selections": {
+      "python": "smt",
+    },
+  },
 }
